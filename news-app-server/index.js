@@ -3,9 +3,10 @@ require('./app/db');
 const app = express();
 const port = 8000;
 const User = require('./app/models/User');
+const bodyParser = require('body-parser');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send('Server up and running.');
@@ -17,7 +18,7 @@ app.listen(port, () => {
 
 app.get('/users', async (req, res) => {
   const results = await User.find({});
-  res.send('results');
+  res.send(results);
 });
 
 app.post('/users', async (req, res) => {
@@ -25,7 +26,7 @@ app.post('/users', async (req, res) => {
     username: req.body.username,
     email: req.body.email,
     firstName: req.body.firstName,
-    surname: req.body.surname
+    surname: req.body.surname,
   });
 
   await user.save();
