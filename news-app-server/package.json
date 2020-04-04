@@ -4,7 +4,7 @@
   "description": "Backend API for news-app",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jest --detectOpenHandles --runInBand"
   },
   "author": "Daniel Stephenson",
   "license": "ISC",
@@ -14,5 +14,9 @@
     "mongodb": "^3.4.1",
     "mongoose": "5.7.5",
     "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "jest": "^25.2.7",
+    "supertest": "^4.0.2"
   }
 }

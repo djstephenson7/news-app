@@ -12,23 +12,21 @@ app.get('/', (req, res) => {
   res.send('Server up and running.');
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}...`);
-});
-
 app.get('/users', async (req, res) => {
   const results = await User.find({});
-  res.send(results);
+  res.status(200).send(results);
 });
 
 app.post('/users', async (req, res) => {
-  let user = new User({
-    username: req.body.username,
-    email: req.body.email,
-    firstName: req.body.firstName,
-    surname: req.body.surname,
-  });
+  const { username, email, firstName, surname } = req.body;
+  let user = new User({ username, email, firstName, surname });
 
   await user.save();
-  res.send(user);
+  res.status(200).send(user);
 });
+
+const server = app.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+});
+
+module.exports = server;
