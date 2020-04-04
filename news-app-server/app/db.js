@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-// const mongoURI = 'mongodb://localhost:27017';
-const mongoURI = 'mongodb://localhost/news-api';
+const config = require('config');
+const mongoURI = `mongodb://localhost/${config.get('db')}`;
 const mongoOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 };
 
 module.exports = mongoose
@@ -12,6 +12,6 @@ module.exports = mongoose
   .then(() => {
     console.log(`Connecting to ${mongoURI}...`);
   })
-  .catch(error => {
+  .catch((error) => {
     console.log('Error connecting to MongoDB', error);
   });

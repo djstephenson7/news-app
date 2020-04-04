@@ -10,7 +10,7 @@ describe('/users', () => {
   });
 
   afterEach(async () => {
-    await User.remove({});
+    await User.deleteMany({});
     await server.close();
   });
 
