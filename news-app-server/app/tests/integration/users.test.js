@@ -40,7 +40,7 @@ describe('/users', () => {
           surname: 'Three',
         },
       ]);
-      const res = await request(server).get('/users');
+      const res = await request(server).get('/api/users');
 
       expect(res.status).toBe(200);
       expect(res.body[0].username).toBe('User1');
@@ -58,7 +58,7 @@ describe('/users', () => {
     };
 
     it('Should create a new user', async () => {
-      const res = await request(server).post('/users').send(newUser);
+      const res = await request(server).post('/api/users').send(newUser);
 
       expect(res.status).toBe(200);
       expect(res.body).toHaveProperty('_id');
