@@ -1,4 +1,4 @@
 {
   "db": "news-api",
-  "myprivatekey": "myprivatekey"
+  "jwtPrivateKey": "jwtPrivateKey"
 }

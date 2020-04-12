@@ -1,6 +1,7 @@
 const { User, validate } = require('../models/User');
 const express = require('express');
 const router = express();
+const bcrypt = require('bcrypt');
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -18,8 +19,13 @@ router.post('/', async (req, res) => {
 
   let user = new User({ username, email, password, firstName, surname });
 
+  user.password = await bcrypt.hash(user.password, 10);
+
   await user.save();
-  res.status(200).send(user);
+
+  const token = user.generateAuthToken();
+
+  res.header('x-auth-token', token).status(200).send(user);
 });
 
 module.exports = router;
