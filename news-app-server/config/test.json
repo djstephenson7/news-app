@@ -1,3 +1,4 @@
 {
-  "db": "news-api-test"
+  "db": "news-api-test",
+  "myprivatekey": "myprivatekey"
 }

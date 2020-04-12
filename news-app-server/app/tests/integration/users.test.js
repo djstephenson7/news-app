@@ -2,9 +2,9 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const { User } = require('../../models/User');
 
-let server;
-
 describe('/users', () => {
+  let server;
+
   beforeEach(async () => {
     server = require('../../../index');
   });
@@ -24,20 +24,20 @@ describe('/users', () => {
         {
           username: 'User1',
           email: 'user1@test1.com',
-          firstName: 'User',
-          surname: 'One',
+          firstName: 'User1 firstName',
+          surname: 'User1 surname',
         },
         {
           username: 'User2',
           email: 'user2@test2.com',
-          firstName: 'User',
-          surname: 'Two',
+          firstName: 'User2 firstName',
+          surname: 'User2 surname',
         },
         {
           username: 'User3',
           email: 'user3@test3.com',
-          firstName: 'User',
-          surname: 'Three',
+          firstName: 'User3 firstName',
+          surname: 'User3 surname',
         },
       ]);
       const res = await request(server).get('/api/users');
@@ -45,7 +45,7 @@ describe('/users', () => {
       expect(res.status).toBe(200);
       expect(res.body[0].username).toBe('User1');
       expect(res.body[1].email).toBe('user2@test2.com');
-      expect(res.body[2].surname).toBe('Three');
+      expect(res.body[2].surname).toBe('User3 surname');
     });
   });
 
@@ -56,6 +56,7 @@ describe('/users', () => {
       newUser = {
         username: 'User1',
         email: 'user1@test1.com',
+        password: 'Password',
         firstName: 'User1 firstName',
         surname: 'User1 surname',
       };

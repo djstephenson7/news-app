@@ -12,10 +12,11 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
+  const { username, email, password, firstName, surname } = req.body;
+
   if (error) return res.status(400).send(error.details[0].message);
 
-  const { username, email, firstName, surname } = req.body;
-  let user = new User({ username, email, firstName, surname });
+  let user = new User({ username, email, password, firstName, surname });
 
   await user.save();
   res.status(200).send(user);
