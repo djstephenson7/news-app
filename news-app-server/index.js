@@ -2,7 +2,7 @@ const express = require('express');
 require('./app/db');
 const app = express();
 const port = 8000;
-const users = require('./app/routes/user');
+const users = require('./app/routes/users');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

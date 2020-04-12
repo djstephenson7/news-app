@@ -1,11 +1,11 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const User = require('../../models/User');
+const { User } = require('../../models/User');
 
 let server;
 
 describe('/users', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     server = require('../../../index');
   });
 
@@ -50,19 +50,44 @@ describe('/users', () => {
   });
 
   describe('POST', () => {
-    const newUser = {
-      username: 'User1',
-      email: 'user1@test1.com',
-      firstName: 'User',
-      surname: 'One',
-    };
+    let newUser;
+
+    beforeEach(() => {
+      newUser = {
+        username: 'User1',
+        email: 'user1@test1.com',
+        firstName: 'User1 firstName',
+        surname: 'User1 surname',
+      };
+    });
 
     it('Should create a new user', async () => {
       const res = await request(server).post('/api/users').send(newUser);
 
       expect(res.status).toBe(200);
       expect(res.body).toHaveProperty('_id');
-      expect(res.body).toHaveProperty('firstName', 'User');
+      expect(res.body).toHaveProperty('firstName', 'User1 firstName');
+    });
+
+    it('Should return invalid if email is fewer than 5 chars', async () => {
+      newUser.email = '1234';
+      const res = await request(server).post('/api/users').send(newUser);
+
+      expect(res.status).toBe(400);
+    });
+
+    it('Should return invalid if email is not in valid format', async () => {
+      newUser.email = 'emailAtEmail.com';
+      const res = await request(server).post('/api/users').send(newUser);
+
+      expect(res.status).toBe(400);
+    });
+
+    it('Should return invalid if username is more than 50 chars', async () => {
+      newUser.username = 'a'.repeat(51);
+      const res = await request(server).post('/api/users').send(newUser);
+
+      expect(res.status).toBe(400);
     });
   });
 });
