@@ -1,6 +1,7 @@
-node_modules/**/*
+app/node_modules/**/*
 news-app-server/node_modules
-.expo/*
+app/node_modules
+app/.expo/*
 npm-debug.*
 *.jks
 *.p8
