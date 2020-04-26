@@ -1,15 +1,16 @@
-import React from 'react';
 import {
-  View,
-  Text,
   StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
+  View,
 } from 'react-native';
+
+import React from 'react';
 
 export interface LoginScreenProps {}
 
-const LoginScreen = (props) => {
+const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Login screen</Text>
@@ -26,13 +27,11 @@ const LoginScreen = (props) => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
         <Text style={styles.forgot}>Forgot Password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={styles.loginText} onPress={console.log(props)}>
-          Signup
-        </Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+        <Text style={styles.loginText}>Signup</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.loginBtn}>
         <Text style={styles.loginText}>LOGIN</Text>
