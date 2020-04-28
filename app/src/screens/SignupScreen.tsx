@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import * as yup from 'yup';
 
 type FormData = {
   username: string;
@@ -18,14 +19,23 @@ type FormData = {
   confirmPassword: string;
 };
 
+const formSchema = yup.object().shape({
+  username: yup.string().min(5).max(50).required(),
+  email: yup.string().email().min(5).max(50).required(),
+  firstName: yup.string().min(5).max(50).required(),
+  surname: yup.string().min(5).max(50).required(),
+  password: yup.string().min(5).max(50).required(),
+  confirmPassword: yup.string().min(5).max(50).required(),
+});
+
 const SignupScreen = ({ navigation }) => {
-  const { register, handleSubmit, setValue } = useForm<FormData>();
+  const { register, handleSubmit, setValue, errors } = useForm<FormData>({
+    validationSchema: formSchema,
+  });
 
   const onSubmit = async (data) => {
     try {
-      const result = await axios.post('http://localhost:8000/api/users', data);
-
-      console.log('Form Data', result);
+      await axios.post('http://localhost:8000/api/users', data);
     } catch (error) {
       console.log(error);
     }
@@ -49,22 +59,26 @@ const SignupScreen = ({ navigation }) => {
         placeholder="Username"
         autoCapitalize="none"
       />
+      {errors.username && <Text>{errors.username.message}</Text>}
       <TextInput
         onChangeText={(text) => setValue('email', text)}
         style={styles.inputText}
         placeholder="Email"
         autoCapitalize="none"
       />
+      {errors.email && <Text>{errors.email.message}</Text>}
       <TextInput
         onChangeText={(text) => setValue('firstName', text)}
         style={styles.inputText}
         placeholder="First Name"
       />
+      {errors.firstName && <Text>{errors.firstName.message}</Text>}
       <TextInput
         onChangeText={(text) => setValue('surname', text)}
         style={styles.inputText}
         placeholder="Surname"
       />
+      {errors.surname && <Text>{errors.surname.message}</Text>}
       <TextInput
         onChangeText={(text) => setValue('password', text)}
         style={styles.inputText}
@@ -72,6 +86,7 @@ const SignupScreen = ({ navigation }) => {
         secureTextEntry
         autoCapitalize="none"
       />
+      {errors.password && <Text>{errors.password.message}</Text>}
       <TextInput
         // onChangeText={(text) => setValue('confirmPassword', text)}
         style={styles.inputText}
