@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
@@ -18,10 +19,17 @@ type FormData = {
 };
 
 const SignupScreen = ({ navigation }) => {
-  const onSubmit = (data) => {
-    console.log('Form Data', data);
-  };
   const { register, handleSubmit, setValue } = useForm<FormData>();
+
+  const onSubmit = async (data) => {
+    try {
+      const result = await axios.post('http://localhost:8000/api/users', data);
+
+      console.log('Form Data', result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     register('username');
@@ -65,7 +73,7 @@ const SignupScreen = ({ navigation }) => {
         autoCapitalize="none"
       />
       <TextInput
-        onChangeText={(text) => setValue('confirmPassword', text)}
+        // onChangeText={(text) => setValue('confirmPassword', text)}
         style={styles.inputText}
         placeholder="Confirm Password"
         secureTextEntry
