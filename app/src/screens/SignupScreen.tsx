@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -30,12 +31,20 @@ const formSchema = yup.object().shape({
 
 const SignupScreen = ({ navigation }) => {
   const { register, handleSubmit, setValue, errors } = useForm<FormData>({
-    validationSchema: formSchema,
+    // validationSchema: formSchema,
   });
 
   const onSubmit = async (data) => {
     try {
-      await axios.post('http://localhost:8000/api/users', data);
+      const res = await axios.post('http://localhost:8000/api/users', data);
+      const token = await AsyncStorage.setItem(
+        'token',
+        res.headers['x-auth-token']
+      );
+      console.log(token);
+
+      navigation.navigate('Main');
+      console.log(res.headers['x-auth-token']);
     } catch (error) {
       console.log(error);
     }
@@ -99,7 +108,7 @@ const SignupScreen = ({ navigation }) => {
         <Text style={styles.loginText}>To Login Screen</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={handleSubmit(onSubmit)}
+        onPress={() => handleSubmit(onSubmit)}
         style={styles.loginBtn}
       >
         <Text style={styles.loginText}>SIGNUP</Text>
