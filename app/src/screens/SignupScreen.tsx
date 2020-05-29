@@ -1,15 +1,9 @@
-import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, Input, Text } from 'react-native-elements';
 import * as yup from 'yup';
+
+import { Context as AuthContext } from '../context/authContext';
 
 type FormData = {
   username: string;
@@ -30,89 +24,59 @@ const formSchema = yup.object().shape({
 });
 
 const SignupScreen = ({ navigation }) => {
-  const { register, handleSubmit, setValue, errors } = useForm<FormData>({
-    // validationSchema: formSchema,
-  });
-
-  const onSubmit = async (data) => {
-    try {
-      const res = await axios.post('http://localhost:8000/api/users', data);
-      const token = await AsyncStorage.setItem(
-        'token',
-        res.headers['x-auth-token']
-      );
-      console.log(token);
-
-      navigation.navigate('Main');
-      console.log(res.headers['x-auth-token']);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    register('username');
-    register('email');
-    register('firstName');
-    register('surname');
-    register('password');
-    register('confirmPassword');
-  }, [register]);
+  const { state, signup } = useContext(AuthContext);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [firstName, setfirstName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
-    <View style={styles.container}>
+    <View>
       <Text style={styles.header}>Signup screen</Text>
-      <TextInput
-        onChangeText={(text) => setValue('username', text)}
-        style={styles.inputText}
-        placeholder="Username"
+      <Input
+        label="Username"
+        value={username}
+        onChangeText={setUsername}
         autoCapitalize="none"
+        autoCorrect={false}
       />
-      {errors.username && <Text>{errors.username.message}</Text>}
-      <TextInput
-        onChangeText={(text) => setValue('email', text)}
-        style={styles.inputText}
-        placeholder="Email"
+      <Input
+        label="Email"
+        value={email}
+        onChangeText={setEmail}
         autoCapitalize="none"
+        autoCorrect={false}
       />
-      {errors.email && <Text>{errors.email.message}</Text>}
-      <TextInput
-        onChangeText={(text) => setValue('firstName', text)}
-        style={styles.inputText}
-        placeholder="First Name"
+      <Input
+        label="First Name"
+        value={firstName}
+        onChangeText={setfirstName}
+        autoCapitalize="none"
+        autoCorrect={false}
       />
-      {errors.firstName && <Text>{errors.firstName.message}</Text>}
-      <TextInput
-        onChangeText={(text) => setValue('surname', text)}
-        style={styles.inputText}
-        placeholder="Surname"
+      <Input
+        label="Surname"
+        value={surname}
+        onChangeText={setSurname}
+        autoCapitalize="none"
+        autoCorrect={false}
       />
-      {errors.surname && <Text>{errors.surname.message}</Text>}
-      <TextInput
-        onChangeText={(text) => setValue('password', text)}
-        style={styles.inputText}
-        placeholder="Password"
+      <Input
+        label="Password"
+        value={password}
+        onChangeText={setPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
         secureTextEntry
-        autoCapitalize="none"
       />
-      {errors.password && <Text>{errors.password.message}</Text>}
-      <TextInput
-        // onChangeText={(text) => setValue('confirmPassword', text)}
-        style={styles.inputText}
-        placeholder="Confirm Password"
-        secureTextEntry
-        autoCapitalize="none"
-      />
-
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={styles.loginText}>To Login Screen</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => handleSubmit(onSubmit)}
-        style={styles.loginBtn}
-      >
-        <Text style={styles.loginText}>SIGNUP</Text>
-      </TouchableOpacity>
+      <Button title="To Login Screen" onPress={navigation.goBack}></Button>
+      <Button
+        title="Signup"
+        onPress={() =>
+          signup({ username, email, firstName, surname, password })
+        }
+      ></Button>
     </View>
   );
 };
