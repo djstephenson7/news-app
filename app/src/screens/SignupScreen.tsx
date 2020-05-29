@@ -30,9 +30,11 @@ const SignupScreen = ({ navigation }) => {
   const [firstName, setfirstName] = useState('');
   const [surname, setSurname] = useState('');
   const [password, setPassword] = useState('');
+  const { errorMessage } = state;
 
   return (
     <View>
+      {errorMessage && <Text>{errorMessage}</Text>}
       <Text style={styles.header}>Signup screen</Text>
       <Input
         label="Username"
