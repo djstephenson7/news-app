@@ -6,17 +6,19 @@ import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import LoginScreen from '../screens/LoginScreen';
 import MainScreen from '../screens/MainScreen';
 import SignupScreen from '../screens/SignupScreen';
+import { navigationRef } from './navigationRef';
 
 const Stack = createStackNavigator();
+const Screen = Stack.Screen;
 
 const AppNavigation = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-        <Stack.Screen name="Main" component={MainScreen} />
+        <Screen name="Login" component={LoginScreen} />
+        <Screen name="Signup" component={SignupScreen} />
+        <Screen name="MainScreen" component={MainScreen} />
+        <Screen name="ForgotPassword" component={ForgotPasswordScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,14 +1,12 @@
 import React from 'react';
 
 import { Provider as AuthProvider } from './src/context/authContext';
-import AppNavigation from './src/navigation';
+import App from './src/navigation';
 
-const App = () => {
+export default () => {
   return (
     <AuthProvider>
-      <AppNavigation />
+      <App />
     </AuthProvider>
   );
 };
-
-export default App;

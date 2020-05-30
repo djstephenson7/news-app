@@ -34,7 +34,7 @@ const SignupScreen = ({ navigation }) => {
 
   return (
     <View>
-      {errorMessage && <Text>{errorMessage}</Text>}
+      <Text>{errorMessage && errorMessage}</Text>
       <Text style={styles.header}>Signup screen</Text>
       <Input
         label="Username"
