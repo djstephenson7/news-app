@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Button, Input, Text } from 'react-native-elements';
+import { ScrollView, StyleSheet } from 'react-native';
+import { Button, Input } from 'react-native-elements';
 import * as yup from 'yup';
 
+import AuthForm from '../components/AuthForm';
 import { Context as AuthContext } from '../context/authContext';
 
 type FormData = {
@@ -25,23 +26,22 @@ const formSchema = yup.object().shape({
 
 const SignupScreen = ({ navigation }) => {
   const { state, signup } = useContext(AuthContext);
+
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setfirstName] = useState('');
   const [surname, setSurname] = useState('');
-  const [password, setPassword] = useState('');
-  const { errorMessage } = state;
 
   return (
-    <View>
-      <Text>{errorMessage && errorMessage}</Text>
-      <Text style={styles.header}>Signup screen</Text>
-      <Input
-        label="Username"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-        autoCorrect={false}
+    <ScrollView>
+      <AuthForm
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        headerText="Signup screen"
+        errorMessage={state.errorMessage}
       />
       <Input
         label="Email"
@@ -64,14 +64,7 @@ const SignupScreen = ({ navigation }) => {
         autoCapitalize="none"
         autoCorrect={false}
       />
-      <Input
-        label="Password"
-        value={password}
-        onChangeText={setPassword}
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry
-      />
+
       <Button title="To Login Screen" onPress={navigation.goBack}></Button>
       <Button
         title="Signup"
@@ -79,7 +72,7 @@ const SignupScreen = ({ navigation }) => {
           signup({ username, email, firstName, surname, password })
         }
       ></Button>
-    </View>
+    </ScrollView>
   );
 };
 
