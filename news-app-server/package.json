@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.4.1",
     "mongoose": "5.7.5",
+    "newsapi": "^2.4.0",
     "nodemon": "^2.0.2"
   },
   "devDependencies": {

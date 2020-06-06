@@ -12,10 +12,9 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  await User.deleteMany({});
   const { error } = validate(req.body);
   const { username, email, password, firstName, surname } = req.body;
-
-  console.log(error);
 
   if (error) return res.status(400).send(error.details[0].message);
 

@@ -4,6 +4,7 @@ const app = express();
 const port = 8000;
 const users = require('./app/routes/users');
 const auth = require('./app/routes/auth');
+const news = require('./app/routes/news');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,6 +15,7 @@ app.get('/api', (req, res) => {
 
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+app.use('/api/news', news);
 
 const server = app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
