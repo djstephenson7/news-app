@@ -26,7 +26,7 @@ const formSchema = yup.object().shape({
   confirmPassword: yup.string().min(5).max(50).required(),
 });
 
-const SignupScreen = ({ navigation }) => {
+const SignupScreen = () => {
   const { state, signup } = useContext(AuthContext);
 
   const [username, setUsername] = useState('');

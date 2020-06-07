@@ -7,9 +7,9 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 router.post('/', async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
+  const user = await User.findOne({ username: req.body.username });
 
-  if (!user) return res.status(400).send('Invalid email.');
+  if (!user) return res.status(400).send('Invalid username.');
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
 
@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
 
   const token = user.generateAuthToken();
 
-  res.send(token);
+  res.status(200).send(token);
 });
 
 module.exports = router;

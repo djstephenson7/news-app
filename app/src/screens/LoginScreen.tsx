@@ -1,38 +1,33 @@
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { Context as AuthContext } from '../context/authContext';
+import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
-import React from 'react';
-import { navigate } from '../navigation/navigationRef';
 
-export interface LoginScreenProps {}
+const LoginScreen = () => {
+  const { state, signin } = useContext(AuthContext);
 
-const LoginScreen = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Login screen</Text>
-      <TextInput
-        style={styles.inputText}
-        placeholder="Email"
-        placeholderTextColor="#003f5c"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.inputText}
-        placeholder="Password"
-        placeholderTextColor="#003f5c"
-        secureTextEntry
-        autoCapitalize="none"
+    <View>
+      <AuthForm
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        headerText="Login screen"
+        errorMessage={state.errorMessage}
       />
       <NavLink text="To Signup Screen" routeName="Signup" />
       <NavLink text="Forgot your password?" routeName="ForgotPassword" />
 
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => signin({ username, password })}
+      >
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
     </View>
@@ -40,12 +35,6 @@ const LoginScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#5F9EA0',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   header: {
     marginBottom: '30%',
     fontSize: 30,

@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  await User.deleteMany({});
+  // await User.deleteMany({});
   const { error } = validate(req.body);
   const { username, email, password, firstName, surname } = req.body;
 
@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 
   const token = user.generateAuthToken();
 
-  res.header('x-auth-token', token).status(200).send(user);
+  res.status(200).send(token);
 });
 
 module.exports = router;

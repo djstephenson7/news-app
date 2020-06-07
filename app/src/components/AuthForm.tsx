@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { Button, Input, Text } from 'react-native-elements';
+import { Input, Text } from 'react-native-elements';
+
+import React from 'react';
 
 export interface AuthFormProps {
   headerText: string;
   errorMessage: string;
 }
 
-const AuthForm: React.SFC<AuthFormProps> = ({
-  headerText,
-  errorMessage,
-  username,
-  password,
-  setUsername,
-  setPassword,
-}) => {
+const AuthForm = (props) => {
+  const {
+    headerText,
+    errorMessage,
+    username,
+    password,
+    setUsername,
+    setPassword,
+  } = props;
   return (
     <>
       <Text>{headerText}</Text>
