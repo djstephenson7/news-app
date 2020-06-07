@@ -6,7 +6,9 @@ import {
   View,
 } from 'react-native';
 
+import NavLink from '../components/NavLink';
 import React from 'react';
+import { navigate } from '../navigation/navigationRef';
 
 export interface LoginScreenProps {}
 
@@ -27,12 +29,9 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-        <Text style={styles.forgot}>Forgot Password?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-        <Text style={styles.loginText}>Signup</Text>
-      </TouchableOpacity>
+      <NavLink text="To Signup Screen" routeName="Signup" />
+      <NavLink text="Forgot your password?" routeName="ForgotPassword" />
+
       <TouchableOpacity style={styles.loginBtn}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>

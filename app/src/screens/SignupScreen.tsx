@@ -1,10 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { Button, Input } from 'react-native-elements';
 import * as yup from 'yup';
 
-import AuthForm from '../components/AuthForm';
+import { Button, Input } from 'react-native-elements';
+import React, { useContext, useState } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+
 import { Context as AuthContext } from '../context/authContext';
+import AuthForm from '../components/AuthForm';
+import NavLink from '../components/NavLink';
 
 type FormData = {
   username: string;
@@ -65,7 +67,7 @@ const SignupScreen = ({ navigation }) => {
         autoCorrect={false}
       />
 
-      <Button title="To Login Screen" onPress={navigation.goBack}></Button>
+      <NavLink text="To Login Screen" routeName="Login" />
       <Button
         title="Signup"
         onPress={() =>
