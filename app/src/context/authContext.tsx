@@ -8,11 +8,11 @@ const authReducer = (state, action) => {
     case 'error':
       return { ...state, errorMessage: action.payload };
     case 'clear_errors':
-      console.log('clear_errors hit');
-
       return { ...state, errorMessage: '' };
     case 'signin':
       return { errorMessage: '', token: action.payload };
+    case 'signout':
+      return { token: null };
     default:
       return state;
   }
@@ -27,6 +27,17 @@ const signup = (dispatch) => async (signupDetails) => {
     navigate('MainScreen');
   } catch (error) {
     dispatch({ type: 'error', payload: 'Something went wrong' });
+  }
+};
+
+const autoSignin = (dispatch) => async () => {
+  const token = await AsyncStorage.getItem('token');
+
+  if (token) {
+    dispatch({ type: 'signin', payload: token });
+    navigate('MainScreen');
+  } else {
+    navigate('Login');
   }
 };
 
@@ -45,10 +56,14 @@ const signin = (dispatch) => async ({ username, password }) => {
     dispatch({ type: 'error', payload: 'Something went wrong' });
   }
 };
-const signout = (dispatch) => () => {};
+const signout = (dispatch) => async () => {
+  await AsyncStorage.removeItem('token');
+  dispatch({ type: 'signout' });
+  navigate('Login');
+};
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signup, signin, clearErrors },
+  { autoSignin, clearErrors, signin, signup, signout },
   { token: null, errorMessage: '' }
 );

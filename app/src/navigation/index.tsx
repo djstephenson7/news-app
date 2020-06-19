@@ -1,4 +1,5 @@
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
+import LoadingScreen from '../screens/LoadingScreen';
 import LoginScreen from '../screens/LoginScreen';
 import MainScreen from '../screens/MainScreen';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,7 +14,8 @@ const Screen = Stack.Screen;
 const AppNavigation = () => {
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Loading">
+        <Screen name="Loading" component={LoadingScreen} />
         <Screen name="Login" component={LoginScreen} />
         <Screen name="Signup" component={SignupScreen} />
         <Screen name="MainScreen" component={MainScreen} />

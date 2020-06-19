@@ -12,8 +12,10 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
 
   useFocusEffect(
-    React.useCallback(() => {
-      return () => clearErrors();
+    useCallback(() => {
+      return () => {
+        clearErrors();
+      };
     }, [])
   );
 
