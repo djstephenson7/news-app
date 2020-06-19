@@ -37,7 +37,7 @@ const autoSignin = (dispatch) => async () => {
     dispatch({ type: 'signin', payload: token });
     navigate('MainScreen');
   } else {
-    navigate('Login');
+    navigate('AuthFlow');
   }
 };
 
