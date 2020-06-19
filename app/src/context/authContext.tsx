@@ -7,6 +7,10 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case 'error':
       return { ...state, errorMessage: action.payload };
+    case 'clear_errors':
+      console.log('clear_errors hit');
+
+      return { ...state, errorMessage: '' };
     case 'signin':
       return { errorMessage: '', token: action.payload };
     default:
@@ -26,6 +30,10 @@ const signup = (dispatch) => async (signupDetails) => {
   }
 };
 
+const clearErrors = (dispatch) => () => {
+  dispatch({ type: 'clear_errors' });
+};
+
 const signin = (dispatch) => async ({ username, password }) => {
   try {
     const res = await newsAPI.post('/auth', { username, password });
@@ -41,6 +49,6 @@ const signout = (dispatch) => () => {};
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signup, signin },
+  { signup, signin, clearErrors },
   { token: null, errorMessage: '' }
 );

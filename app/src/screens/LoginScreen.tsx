@@ -1,15 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Context as AuthContext } from '../context/authContext';
 import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
+import { useFocusEffect } from '@react-navigation/native';
 
 const LoginScreen = () => {
-  const { state, signin } = useContext(AuthContext);
-
+  const { state, signin, clearErrors } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => clearErrors();
+    }, [])
+  );
 
   return (
     <View>
@@ -23,7 +29,6 @@ const LoginScreen = () => {
       />
       <NavLink text="To Signup Screen" routeName="Signup" />
       <NavLink text="Forgot your password?" routeName="ForgotPassword" />
-
       <TouchableOpacity
         style={styles.loginBtn}
         onPress={() => signin({ username, password })}

@@ -16,6 +16,7 @@ const AuthForm = (props) => {
     setUsername,
     setPassword,
   } = props;
+
   return (
     <>
       <Text>{headerText}</Text>
