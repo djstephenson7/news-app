@@ -13,7 +13,7 @@ const AuthStack = createStackNavigator();
 
 export const AuthFlow = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator initialRouteName="Login">
       <AuthStack.Screen name="Login" component={LoginScreen} />
       <AuthStack.Screen name="Signup" component={SignupScreen} />
     </AuthStack.Navigator>

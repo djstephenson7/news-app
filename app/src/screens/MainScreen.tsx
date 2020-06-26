@@ -1,4 +1,4 @@
-import { Button, FlatList, Text, View } from 'react-native';
+import { Button, SectionList, Text, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Context as AuthContext } from '../context/authContext';
@@ -9,22 +9,34 @@ const MainScreen = () => {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const res = await newsAPI.get('/news');
 
-      setResults(res.data);
-    }
+      res.data.forEach((el, index) => {
+        results.push({
+          key: index + 1,
+          title: el.title,
+          data: [el.description],
+        });
+      });
+      setResults(results);
+    };
+    results.length = 0;
     fetchData();
   }, []);
 
   return (
     <View>
       <Text>MainScreen</Text>
-      <Button title="Button" onPress={signout} />
-      <FlatList
-        data={results}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
+      <Button title="Logout" onPress={signout} />
+      <SectionList
+        sections={results}
+        keyExtractor={(item) => item.key}
+        initialNumToRender={6}
+        renderItem={({ item }) => <Text>{item}</Text>}
+        renderSectionHeader={({ section }) => (
+          <Text style={{ color: 'red' }}>{section.title}</Text>
+        )}
       />
     </View>
   );
