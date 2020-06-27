@@ -2,27 +2,14 @@ import { Button, SectionList, Text, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Context as AuthContext } from '../context/authContext';
-import newsAPI from '../api/newsAPI';
+import { Context as NewsContext } from '../context/newsContext';
 
 const MainScreen = () => {
   const { signout } = useContext(AuthContext);
-  const [results, setResults] = useState([]);
+  const { fetchNews, state } = useContext(NewsContext);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await newsAPI.get('/news');
-
-      res.data.forEach((el, index) => {
-        results.push({
-          key: index + 1,
-          title: el.title,
-          data: [el.description],
-        });
-      });
-      setResults(results);
-    };
-    results.length = 0;
-    fetchData();
+    fetchNews();
   }, []);
 
   return (
@@ -30,9 +17,8 @@ const MainScreen = () => {
       <Text>MainScreen</Text>
       <Button title="Logout" onPress={signout} />
       <SectionList
-        sections={results}
+        sections={state.results}
         keyExtractor={(item) => item.key}
-        initialNumToRender={6}
         renderItem={({ item }) => <Text>{item}</Text>}
         renderSectionHeader={({ section }) => (
           <Text style={{ color: 'red' }}>{section.title}</Text>

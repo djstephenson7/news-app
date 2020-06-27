@@ -1,12 +1,14 @@
-import React from 'react';
-
-import { Provider as AuthProvider } from './src/context/authContext';
 import App from './src/navigation';
+import { Provider as AuthProvider } from './src/context/authContext';
+import { Provider as NewsProvider } from './src/context/newsContext';
+import React from 'react';
 
 export default () => {
   return (
     <AuthProvider>
-      <App />
+      <NewsProvider>
+        <App />
+      </NewsProvider>
     </AuthProvider>
   );
 };
