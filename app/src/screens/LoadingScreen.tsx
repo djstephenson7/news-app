@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-
 import { ActivityIndicator } from 'react-native';
+
 import { Context as AuthContext } from '../context/authContext';
 
 const LoadingScreen = () => {
@@ -8,7 +8,8 @@ const LoadingScreen = () => {
 
   useEffect(() => {
     autoSignin();
-  });
+  }, []);
+
   return <ActivityIndicator size="large" />;
 };
 

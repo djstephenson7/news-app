@@ -1,21 +1,27 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import LoadingScreen from '../screens/LoadingScreen';
 import LoginScreen from '../screens/LoginScreen';
 import MainScreen from '../screens/MainScreen';
-import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import NewsScreen from '../screens/NewsScreen';
 import SignupScreen from '../screens/SignupScreen';
-import { createStackNavigator } from '@react-navigation/stack';
 import { navigationRef } from './navigationRef';
 
-const Stack = createStackNavigator();
+const MainStack = createStackNavigator();
 const AuthStack = createStackNavigator();
 
 export const AuthFlow = () => {
   return (
-    <AuthStack.Navigator initialRouteName="Login">
+    <AuthStack.Navigator>
       <AuthStack.Screen name="Login" component={LoginScreen} />
       <AuthStack.Screen name="Signup" component={SignupScreen} />
+      <AuthStack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+      />
     </AuthStack.Navigator>
   );
 };
@@ -23,20 +29,20 @@ export const AuthFlow = () => {
 const AppNavigation = () => {
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator>
-        <Stack.Screen
+      <MainStack.Navigator>
+        <MainStack.Screen
           name="Loading"
           component={LoadingScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        <MainStack.Screen
           name="AuthFlow"
           component={AuthFlow}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="MainScreen" component={MainScreen} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-      </Stack.Navigator>
+        <MainStack.Screen name="MainScreen" component={MainScreen} />
+        <MainStack.Screen name="NewsScreen" component={NewsScreen} />
+      </MainStack.Navigator>
     </NavigationContainer>
   );
 };

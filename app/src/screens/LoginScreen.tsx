@@ -1,10 +1,10 @@
+import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useContext, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { Context as AuthContext } from '../context/authContext';
 import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
-import { useFocusEffect } from '@react-navigation/native';
+import { Context as AuthContext } from '../context/authContext';
 
 const LoginScreen = () => {
   const { state, signin, clearErrors } = useContext(AuthContext);

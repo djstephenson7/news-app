@@ -1,5 +1,5 @@
-import createDataContext from './createDataContext';
 import newsAPI from '../api/newsAPI';
+import createDataContext from './createDataContext';
 
 const newsReducer = (state, action) => {
   switch (action.type) {
@@ -19,6 +19,7 @@ const fetchNews = (dispatch) => async () => {
       key: index + 1,
       title: el.title,
       data: [el.description],
+      content: el.content,
     });
   });
 

@@ -1,8 +1,15 @@
-import { Button, SectionList, Text, View } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
+import {
+  Button,
+  SectionList,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { Context as AuthContext } from '../context/authContext';
 import { Context as NewsContext } from '../context/newsContext';
+import { navigate } from '../navigation/navigationRef';
 
 const MainScreen = () => {
   const { signout } = useContext(AuthContext);
@@ -19,10 +26,14 @@ const MainScreen = () => {
       <SectionList
         sections={state.results}
         keyExtractor={(item) => item.key}
-        renderItem={({ item }) => <Text>{item}</Text>}
         renderSectionHeader={({ section }) => (
-          <Text style={{ color: 'red' }}>{section.title}</Text>
+          <TouchableOpacity
+            onPress={() => navigate('NewsScreen', { key: section.key })}
+          >
+            <Text style={{ color: 'red' }}>{section.title}</Text>
+          </TouchableOpacity>
         )}
+        renderItem={({ item }) => <Text>{item}</Text>}
       />
     </View>
   );
