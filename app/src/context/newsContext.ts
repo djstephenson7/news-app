@@ -13,7 +13,6 @@ const newsReducer = (state, action) => {
 const fetchNews = (dispatch) => async () => {
   const results = [];
   const res = await newsAPI.get('/news');
-  console.log(res.data);
 
   res.data.forEach((el, index) => {
     results.push({

@@ -40,8 +40,19 @@ const AppNavigation = () => {
           component={AuthFlow}
           options={{ headerShown: false }}
         />
-        <MainStack.Screen name="MainScreen" component={MainScreen} />
-        <MainStack.Screen name="NewsScreen" component={NewsScreen} />
+        <MainStack.Screen
+          name="MainScreen"
+          component={MainScreen}
+          options={{ headerLeft: null }}
+        />
+        <MainStack.Screen
+          name="NewsScreen"
+          component={NewsScreen}
+          options={({ route }) => ({
+            title: route.params.source,
+            headerBackTitle: null,
+          })}
+        />
       </MainStack.Navigator>
     </NavigationContainer>
   );

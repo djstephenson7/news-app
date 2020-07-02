@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Divider } from 'react-native-elements';
 
 import { Context as AuthContext } from '../context/authContext';
 import { Context as NewsContext } from '../context/newsContext';
@@ -28,12 +29,18 @@ const MainScreen = () => {
         keyExtractor={(item) => item.key}
         renderSectionHeader={({ section }) => (
           <TouchableOpacity
-            onPress={() => navigate('NewsScreen', { key: section.key })}
+            onPress={() =>
+              navigate('NewsScreen', {
+                source: section.source.name,
+                key: section.key,
+              })
+            }
           >
             <Text style={{ color: 'red' }}>{section.title}</Text>
           </TouchableOpacity>
         )}
         renderItem={({ item }) => <Text>{item}</Text>}
+        stickySectionHeadersEnabled={false}
       />
     </View>
   );
