@@ -1,16 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import {
-  Button,
-  SectionList,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { Divider } from 'react-native-elements';
+import { Button, SectionList } from 'react-native';
 
+import NewsItem from '../components/NewsItem';
 import { Context as AuthContext } from '../context/authContext';
 import { Context as NewsContext } from '../context/newsContext';
-import { navigate } from '../navigation/navigationRef';
+import { StyledNewsItemSubheader, StyledView } from '../styledElements';
 
 const MainScreen = () => {
   const { signout } = useContext(AuthContext);
@@ -21,28 +15,18 @@ const MainScreen = () => {
   }, []);
 
   return (
-    <View>
-      <Text>MainScreen</Text>
+    <StyledView>
       <Button title="Logout" onPress={signout} />
       <SectionList
         sections={state.results}
         keyExtractor={(item) => item.key}
-        renderSectionHeader={({ section }) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigate('NewsScreen', {
-                source: section.source.name,
-                key: section.key,
-              })
-            }
-          >
-            <Text style={{ color: 'red' }}>{section.title}</Text>
-          </TouchableOpacity>
+        renderSectionHeader={({ section }) => <NewsItem section={section} />}
+        renderItem={({ item }) => (
+          <StyledNewsItemSubheader>{item}</StyledNewsItemSubheader>
         )}
-        renderItem={({ item }) => <Text>{item}</Text>}
         stickySectionHeadersEnabled={false}
       />
-    </View>
+    </StyledView>
   );
 };
 
