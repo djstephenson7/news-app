@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import newsAPI from '../api/newsAPI';
 import createDataContext from './createDataContext';
 
@@ -11,11 +13,11 @@ const newsReducer = (state, action) => {
 };
 
 const fetchNews = (dispatch) => async () => {
-  const results = [];
+  const storage = [];
   const res = await newsAPI.get('/news');
 
   res.data.forEach((el, index) => {
-    results.push({
+    storage.push({
       key: index + 1,
       author: el.author,
       publishedAt: el.publishedAt,
@@ -27,6 +29,8 @@ const fetchNews = (dispatch) => async () => {
       url: el.url,
     });
   });
+
+  const results = _.uniqBy(storage, 'title');
 
   dispatch({ type: 'fetch_news', payload: results });
 };

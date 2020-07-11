@@ -27,7 +27,6 @@ export const StyledNewsItemSubheader = styled(Text)`
   text-align: justify;
   padding-bottom: 8px;
   margin-right: 8px;
-  margin-left: 8px;
 `;
 
 // export const NewsItemView = styled(View)`
@@ -41,7 +40,9 @@ export const StyledNewsItemSubheader = styled(Text)`
 export const NewsItemImage = styled(Image)`
   height: 80px;
   width: 80px;
-  margin: 8px;
+  margin-top: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
   align-self: center;
 `;
 
