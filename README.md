@@ -4,7 +4,8 @@
 
 - Function to remove duplicate stories DONE
 - UI padding cleanup for stories without images and dividers DONE
-- Swipe down to refresh
+- Swipe down to refresh DONE
+  - Delay refresh a couple of seconds
 - Animation when going to NewsItem screen
 
 ### Drawer Navigator

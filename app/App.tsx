@@ -1,7 +1,8 @@
-import App from './src/navigation';
+import React from 'react';
+
 import { Provider as AuthProvider } from './src/context/authContext';
 import { Provider as NewsProvider } from './src/context/newsContext';
-import React from 'react';
+import App from './src/navigation';
 
 export default () => {
   return (

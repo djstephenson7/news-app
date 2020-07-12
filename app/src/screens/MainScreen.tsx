@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, SectionList } from 'react-native';
 
 import NewsItem from '../components/NewsItem';
@@ -7,11 +7,12 @@ import { Context as NewsContext } from '../context/newsContext';
 import { StyledNewsItemSubheader, StyledView } from '../styledElements';
 
 const MainScreen = () => {
+  const [loading, setLoading] = useState(true);
   const { signout } = useContext(AuthContext);
   const { fetchNews, state } = useContext(NewsContext);
 
   useEffect(() => {
-    fetchNews();
+    fetchNews() && setLoading(false);
   }, []);
 
   return (
@@ -25,6 +26,9 @@ const MainScreen = () => {
           <StyledNewsItemSubheader>{item}</StyledNewsItemSubheader>
         )}
         stickySectionHeadersEnabled={false}
+        onRefresh={() => fetchNews()}
+        refreshing={loading}
+        initialNumToRender={18}
       />
     </StyledView>
   );
