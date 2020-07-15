@@ -1,7 +1,8 @@
 import { AsyncStorage } from 'react-native';
-import createDataContext from './createDataContext';
-import { navigate } from '../navigation/navigationRef';
+
 import newsAPI from '../api/newsAPI';
+import { navigate } from '../navigation/navigationRef';
+import createDataContext from './createDataContext';
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -57,8 +58,10 @@ const signin = (dispatch) => async ({ username, password }) => {
   }
 };
 const signout = (dispatch) => async () => {
+  console.log('signout');
   await AsyncStorage.removeItem('token');
   dispatch({ type: 'signout' });
+
   navigate('AuthFlow');
 };
 

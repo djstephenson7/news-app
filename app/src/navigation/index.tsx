@@ -1,11 +1,14 @@
-import 'react-native-gesture-handler';
-
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  DrawerContentScrollView,
+  DrawerItem,
+  DrawerItemList,
+  createDrawerNavigator,
+} from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
-import { Button } from 'react-native';
+import React, { useContext } from 'react';
 
+import { Context as AuthContext } from '../context/authContext';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import LoadingScreen from '../screens/LoadingScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -62,10 +65,24 @@ const MainFlow = () => {
   );
 };
 
+const Logout = (props) => {
+  const { signout } = useContext(AuthContext);
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem label="Logout" onPress={signout} />
+    </DrawerContentScrollView>
+  );
+};
+
 const AppNavigation = () => {
   return (
     <NavigationContainer ref={navigationRef}>
-      <Drawer.Navigator drawerType="slide" drawerStyle={{ width: '60%' }}>
+      <Drawer.Navigator
+        drawerType="slide"
+        drawerStyle={{ width: '60%' }}
+        drawerContent={(props) => <Logout {...props} />}
+      >
         <Drawer.Screen name="Today's Top Headlines" component={MainFlow} />
         <Drawer.Screen name="Profile" component={ProfileScreen} />
       </Drawer.Navigator>
