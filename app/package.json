@@ -49,7 +49,8 @@
     "import-sort-style-module": "^6.0.0",
     "prettier": "^2.0.5",
     "prettier-plugin-import-sort": "0.0.4",
-    "typescript": "~3.6.3"
+    "typescript": "~3.6.3",
+    "logkitty": ">=0.7.1"
   },
   "private": true,
   "name": "news-app-server",
