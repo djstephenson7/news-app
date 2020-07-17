@@ -15,45 +15,65 @@ import LoginScreen from '../screens/LoginScreen';
 import MainScreen from '../screens/MainScreen';
 import NewsScreen from '../screens/NewsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import SearchNewsScreen from '../screens/SearchNewsScreen';
 import SignupScreen from '../screens/SignupScreen';
 import { navigationRef } from './navigationRef';
 
-const MainStack = createStackNavigator();
-const AuthStack = createStackNavigator();
+const Main = createStackNavigator();
+const Auth = createStackNavigator();
+const Search = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-export const AuthFlow = () => {
+const AuthFlow = () => {
   return (
-    <AuthStack.Navigator>
-      <AuthStack.Screen name="Login" component={LoginScreen} />
-      <AuthStack.Screen name="Signup" component={SignupScreen} />
-      <AuthStack.Screen
-        name="ForgotPassword"
-        component={ForgotPasswordScreen}
+    <Auth.Navigator>
+      <Auth.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerLeft: null, gestureEnabled: false }}
       />
-    </AuthStack.Navigator>
+      <Auth.Screen name="Signup" component={SignupScreen} />
+      <Auth.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+    </Auth.Navigator>
+  );
+};
+const SearchStack = () => {
+  return (
+    <Search.Navigator>
+      <Search.Screen
+        name="SearchNewsScreen"
+        component={SearchNewsScreen}
+        options={{ title: 'Search' }}
+      />
+    </Search.Navigator>
   );
 };
 
 const MainFlow = () => {
   return (
-    <MainStack.Navigator>
-      <MainStack.Screen
+    <Main.Navigator>
+      <Main.Screen
         name="Loading"
         component={LoadingScreen}
         options={{ headerShown: false }}
       />
-      <MainStack.Screen
+      <Main.Screen
         name="AuthFlow"
         component={AuthFlow}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
-      <MainStack.Screen
+      <Main.Screen
         name="MainScreen"
         component={MainScreen}
-        options={{ headerLeft: null, gestureEnabled: false }}
+        options={{
+          headerLeft: null,
+          gestureEnabled: false,
+          title: "Today's Top Headlines",
+        }}
       />
-      <MainStack.Screen
+      <Main.Screen
         name="NewsScreen"
         component={NewsScreen}
         options={({ route }) => ({
@@ -61,7 +81,7 @@ const MainFlow = () => {
           headerBackTitle: null,
         })}
       />
-    </MainStack.Navigator>
+    </Main.Navigator>
   );
 };
 
@@ -83,8 +103,13 @@ const AppNavigation = () => {
         drawerStyle={{ width: '60%' }}
         drawerContent={(props) => <Logout {...props} />}
       >
-        <Drawer.Screen name="Today's Top Headlines" component={MainFlow} />
+        <Drawer.Screen
+          name="Today's Top Headlines"
+          component={MainFlow}
+          options={{ unmountOnBlur: true }}
+        />
         <Drawer.Screen name="Profile" component={ProfileScreen} />
+        <Drawer.Screen name="SearchNewsScreen" component={SearchStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

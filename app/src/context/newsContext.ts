@@ -1,42 +1,46 @@
-import _ from 'lodash';
-
 import newsAPI from '../api/newsAPI';
+import { formatResults } from '../utils';
 import createDataContext from './createDataContext';
 
 const newsReducer = (state, action) => {
   switch (action.type) {
-    case 'fetch_news':
+    case 'display_news':
       return { ...state, results: action.payload };
+    case 'clear_news':
+      return { ...state, results: [] };
     default:
       return state;
   }
 };
 
 const fetchNews = (dispatch) => async () => {
-  const storage = [];
-  const res = await newsAPI.get('/news');
+  try {
+    const res = await newsAPI.get('/news');
+    const formattedResults = formatResults(res);
 
-  res.data.forEach((el, index) => {
-    storage.push({
-      key: index + 1,
-      author: el.author,
-      publishedAt: el.publishedAt,
-      urlToImage: el.urlToImage,
-      title: el.title,
-      data: [el.description],
-      content: el.content,
-      source: el.source,
-      url: el.url,
-    });
-  });
+    dispatch({ type: 'display_news', payload: formattedResults });
+  } catch (error) {
+    dispatch({ type: 'error', payload: 'Something went wrong' });
+  }
+};
 
-  const results = _.uniqBy(storage, 'title');
+const searchNews = (dispatch) => async (query) => {
+  try {
+    const res = await newsAPI.post('/news', { query });
+    const formattedResults = formatResults(res);
 
-  dispatch({ type: 'fetch_news', payload: results });
+    dispatch({ type: 'display_news', payload: formattedResults });
+  } catch (error) {
+    dispatch({ type: 'error', payload: 'Something went wrong' });
+  }
+};
+
+const clearNews = (dispatch) => () => {
+  dispatch({ type: 'clear_news' });
 };
 
 export const { Provider, Context } = createDataContext(
   newsReducer,
-  { fetchNews },
+  { clearNews, fetchNews, searchNews },
   { results: [] }
 );

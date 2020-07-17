@@ -14,11 +14,11 @@
 - Search News Screen
 - Profile Screen
 - Settings
-- Logout
+- Logout DONE
 
 ### Search News Screen
 
-- Search by headline
+- Search by headline DONE
 - Advanced search? (E.g. search by source, Author, country, language)
 
 ### Settings Screen

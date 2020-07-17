@@ -58,7 +58,6 @@ const signin = (dispatch) => async ({ username, password }) => {
   }
 };
 const signout = (dispatch) => async () => {
-  console.log('signout');
   await AsyncStorage.removeItem('token');
   dispatch({ type: 'signout' });
 

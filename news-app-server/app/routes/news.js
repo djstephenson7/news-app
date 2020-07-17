@@ -16,4 +16,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  try {
+    const results = await newsapi.v2.everything({
+      q: req.body.query,
+      language: 'en',
+    });
+
+    res.send(results.articles);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;

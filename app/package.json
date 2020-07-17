@@ -24,7 +24,7 @@
     "@react-navigation/stack": "^5.7.0",
     "axios": "^0.19.2",
     "expo": "~36.0.0",
-    "lodash": "^4.17.19",
+    "lodash": ">=4.17.19",
     "moment": "^2.27.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -50,7 +50,8 @@
     "prettier": "^2.0.5",
     "prettier-plugin-import-sort": "0.0.4",
     "typescript": "~3.6.3",
-    "logkitty": ">=0.7.1"
+    "logkitty": ">=0.7.1",
+    "mem": ">=4.0.0"
   },
   "private": true,
   "name": "news-app-server",
