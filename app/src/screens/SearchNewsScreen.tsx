@@ -32,7 +32,7 @@ const SearchNewsScreen = () => {
         title="Search"
         onPress={() => getNews(value)}
       />
-      {state.results ? (
+      {state.results && (
         <SectionList
           sections={state.results}
           keyExtractor={(item) => item.key}
@@ -44,7 +44,7 @@ const SearchNewsScreen = () => {
           refreshing={loading}
           initialNumToRender={18}
         />
-      ) : null}
+      )}
     </StyledView>
   );
 };
