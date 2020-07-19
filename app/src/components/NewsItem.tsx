@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { SFC } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { navigate } from '../navigation/navigationRef';
 import { NewsItemImage, NewsSubheaderView, Subheader } from '../styledElements';
@@ -14,15 +14,7 @@ const NewsItem = ({ section }) => {
         })
       }
     >
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          borderTopColor: 'grey',
-          borderTopWidth: 1,
-          marginRight: 8,
-        }}
-      >
+      <View style={styles.container}>
         {section.urlToImage ? (
           <NewsItemImage source={{ uri: section.urlToImage }} />
         ) : null}
@@ -34,5 +26,15 @@ const NewsItem = ({ section }) => {
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    borderTopColor: 'grey',
+    borderTopWidth: 1,
+    marginRight: 8,
+  },
+});
 
 export default NewsItem;

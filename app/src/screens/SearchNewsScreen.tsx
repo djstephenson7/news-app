@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SectionList, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import NewsItem from '../components/NewsItem';
+import NewsList from '../components/NewsList';
 import { Context as NewsContext } from '../context/newsContext';
-import { StyledNewsItemSubheader, StyledView } from '../styledElements';
+import { StyledView } from '../styledElements';
 
 const SearchNewsScreen = () => {
   const [value, setValue] = useState('');
@@ -24,7 +24,7 @@ const SearchNewsScreen = () => {
     <StyledView>
       <TextInput
         style={{ height: 40, margin: 8, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={(text) => setValue(text)}
+        onChangeText={setValue}
         value={value}
       />
       <Button
@@ -32,19 +32,11 @@ const SearchNewsScreen = () => {
         title="Search"
         onPress={() => getNews(value)}
       />
-      {state.results && (
-        <SectionList
-          sections={state.results}
-          keyExtractor={(item) => item.key}
-          renderSectionHeader={({ section }) => <NewsItem section={section} />}
-          renderItem={({ item }) => (
-            <StyledNewsItemSubheader>{item}</StyledNewsItemSubheader>
-          )}
-          stickySectionHeadersEnabled={false}
-          refreshing={loading}
-          initialNumToRender={18}
-        />
-      )}
+      <NewsList
+        results={state.results}
+        callback={searchNews}
+        isRefreshing={loading}
+      />
     </StyledView>
   );
 };

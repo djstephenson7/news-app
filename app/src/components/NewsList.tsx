@@ -4,21 +4,16 @@ import { SectionList } from 'react-native';
 import { StyledNewsItemSubheader } from '../styledElements';
 import NewsItem from './NewsItem';
 
-export interface NewsListProps {
-  state: object;
+interface NewsListProps {
+  results: Array<any>;
   callback: () => void;
   isRefreshing: boolean;
 }
 
-const NewsList: SFC<NewsListProps> = (state, callback, isRefreshing) => {
-  console.log('state: ', state);
-  console.log('callback: ', callback);
-
-  console.log('isRefreshing', isRefreshing);
-
+const NewsList: SFC<NewsListProps> = ({ results, callback, isRefreshing }) => {
   return (
     <SectionList
-      sections={state.results}
+      sections={results}
       keyExtractor={(item) => item.key}
       renderSectionHeader={({ section }) => <NewsItem section={section} />}
       renderItem={({ item }) => (
