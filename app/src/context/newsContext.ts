@@ -26,7 +26,7 @@ const fetchNews = (dispatch) => async () => {
 
 const searchNews = (dispatch) => async (query) => {
   try {
-    const res = await newsAPI.post('/news', { query });
+    const res = await newsAPI.post('/news', query);
     const formattedResults = formatResults(res);
 
     dispatch({ type: 'display_news', payload: formattedResults });
