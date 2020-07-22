@@ -24,8 +24,6 @@ const SearchNewsScreen = () => {
     setLoading(false);
   };
 
-  console.log(state.results);
-
   return (
     <StyledView>
       <TextInput
