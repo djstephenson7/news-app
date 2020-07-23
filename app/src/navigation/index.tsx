@@ -45,6 +45,14 @@ const SearchStack = () => {
         component={SearchNewsScreen}
         options={{ title: 'Search' }}
       />
+      <Main.Screen
+        name="NewsScreen"
+        component={NewsScreen}
+        options={({ route }) => ({
+          title: route.params.source,
+          headerBackTitle: null,
+        })}
+      />
     </Search.Navigator>
   );
 };
@@ -87,6 +95,7 @@ const MainFlow = () => {
 
 const Logout = (props) => {
   const { signout } = useContext(AuthContext);
+
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
@@ -109,7 +118,11 @@ const AppNavigation = () => {
           options={{ unmountOnBlur: true }}
         />
         <Drawer.Screen name="Profile" component={ProfileScreen} />
-        <Drawer.Screen name="SearchNewsScreen" component={SearchStack} />
+        <Drawer.Screen
+          name="SearchNewsScreen"
+          component={SearchStack}
+          options={{ unmountOnBlur: true }}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );

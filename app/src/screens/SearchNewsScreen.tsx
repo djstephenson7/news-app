@@ -6,11 +6,12 @@ import { Dropdown } from 'react-native-material-dropdown';
 import NewsList from '../components/NewsList';
 import { Context as NewsContext } from '../context/newsContext';
 import { StyledView } from '../styledElements';
-import { newsDomains } from '../utils';
+import { languages, newsDomains } from '../utils';
 
 const SearchNewsScreen = () => {
   console.disableYellowBox = true;
   const [query, setQuery] = useState('');
+  const [language, setLanguage] = useState('');
   const [source, setSource] = useState('');
   const [loading, setLoading] = useState(true);
   const { clearNews, searchNews, state } = useContext(NewsContext);
@@ -23,7 +24,7 @@ const SearchNewsScreen = () => {
     searchNews(query);
     setLoading(false);
   };
-
+  console.log(language);
   return (
     <StyledView>
       <TextInput
@@ -41,10 +42,19 @@ const SearchNewsScreen = () => {
           setSource(value);
         }}
       />
+      <Dropdown
+        containerStyle={{ margin: 8 }}
+        label="Select Language"
+        data={languages}
+        value={languages.label}
+        onChangeText={(value) => {
+          setLanguage(value);
+        }}
+      />
       <Button
         style={{ margin: 8 }}
         title="Search"
-        onPress={() => getNews({ query, source })}
+        onPress={() => getNews({ language, query, source })}
       />
       <NewsList
         results={state.results}

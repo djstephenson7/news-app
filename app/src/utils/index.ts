@@ -76,3 +76,34 @@ export const newsDomains = [
     label: 'Washington Post',
   },
 ];
+
+export const languages = [
+  {
+    value: 'en',
+    label: 'English',
+  },
+  {
+    value: 'fr',
+    label: 'French (Français)',
+  },
+  {
+    value: 'de',
+    label: 'German (Deutsch)',
+  },
+  {
+    value: 'it',
+    label: 'Italian (Italiano)',
+  },
+  {
+    value: 'pt',
+    label: 'Portuguese (Português)',
+  },
+  {
+    value: 'ru',
+    label: 'Russian (русский)',
+  },
+  {
+    value: 'es',
+    label: 'Spanish (Español)',
+  },
+];

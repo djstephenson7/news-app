@@ -6,9 +6,7 @@ const router = express();
 
 router.get('/', async (req, res) => {
   try {
-    const results = await newsapi.v2.topHeadlines({
-      language: 'en',
-    });
+    const results = await newsapi.v2.topHeadlines({ language: 'en' });
 
     res.send(results.articles);
   } catch (error) {
@@ -17,11 +15,12 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  const { query, source, language } = req.body;
   try {
     const results = await newsapi.v2.everything({
-      q: req.body.query,
-      sources: req.body.source,
-      language: 'en',
+      q: query,
+      sources: source,
+      language,
     });
 
     res.send(results.articles);
