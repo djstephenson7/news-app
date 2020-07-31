@@ -1,5 +1,6 @@
+import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useContext, useEffect, useState } from 'react';
-import { TextInput } from 'react-native';
+import { Platform, TextInput, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
 
@@ -10,6 +11,8 @@ import { languages, newsDomains } from '../utils';
 
 const SearchNewsScreen = () => {
   console.disableYellowBox = true;
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
   const [query, setQuery] = useState('');
   const [language, setLanguage] = useState('');
   const [source, setSource] = useState('');
@@ -20,11 +23,17 @@ const SearchNewsScreen = () => {
     clearNews();
   }, []);
 
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+    console.log(currentDate);
+  };
+
   const getNews = (query) => {
     searchNews(query);
     setLoading(false);
   };
-  console.log(language);
+
   return (
     <StyledView>
       <TextInput
@@ -61,6 +70,18 @@ const SearchNewsScreen = () => {
         callback={searchNews}
         isRefreshing={loading}
       />
+      <View>
+        <View>
+          <Button onPress={() => setShow(!show)} title="Show date picker" />
+        </View>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            onChange={onChange}
+          />
+        )}
+      </View>
     </StyledView>
   );
 };
