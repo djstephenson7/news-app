@@ -15,12 +15,15 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { query, source, language } = req.body;
+  const { query, source, language, dateFrom, dateTo } = req.body;
+
   try {
     const results = await newsapi.v2.everything({
       q: query,
       sources: source,
       language,
+      from: dateFrom,
+      to: dateTo,
     });
 
     res.send(results.articles);

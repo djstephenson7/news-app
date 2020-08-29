@@ -8,6 +8,8 @@ const newsReducer = (state, action) => {
       return { ...state, results: action.payload };
     case 'clear_news':
       return { ...state, results: [] };
+    case 'error':
+      return { ...state, error: action.payload };
     default:
       return state;
   }
@@ -42,5 +44,5 @@ const clearNews = (dispatch) => () => {
 export const { Provider, Context } = createDataContext(
   newsReducer,
   { clearNews, fetchNews, searchNews },
-  { results: [] }
+  { results: [], error: '' }
 );

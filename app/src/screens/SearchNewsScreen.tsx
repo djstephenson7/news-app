@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { TextInput } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Text } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
 
 import NewsList from '../components/NewsList';
@@ -74,8 +74,9 @@ const SearchNewsScreen = () => {
       <Button
         style={{ margin: 8 }}
         title="Search"
-        onPress={() => getNews({ language, query, source })}
+        onPress={() => getNews({ language, query, source, dateFrom, dateTo })}
       />
+      {state.error ? <Text>{state.error}</Text> : null}
       <Popup
         header="Select date from"
         date={dateFrom}
