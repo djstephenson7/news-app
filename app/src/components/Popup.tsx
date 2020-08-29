@@ -1,21 +1,30 @@
-import React, { ReactNode } from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Text } from 'react-native-elements';
 
 interface PopupProps {
-  content: ReactNode;
+  header: string;
   modalVisible: any;
   setModalVisible: any;
+  date: any;
+  setDate: any;
 }
 
 const Popup = (props: PopupProps) => {
-  const { content, modalVisible, setModalVisible } = props;
+  const { header, modalVisible, setModalVisible, date, setDate } = props;
+  const onChange = (event, selectedDate) => setDate(selectedDate);
 
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          {content}
+          <Text h4>{header}</Text>
+          <DateTimePicker
+            style={styles.picker}
+            value={date}
+            onChange={onChange}
+          />
           <Button
             style={{ margin: 8 }}
             onPress={() => setModalVisible(!modalVisible)}
@@ -48,6 +57,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  picker: {
+    height: 300,
+    width: 300,
+    margin: 8,
   },
 });
 

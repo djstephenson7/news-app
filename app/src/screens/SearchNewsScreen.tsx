@@ -1,4 +1,3 @@
-import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useContext, useEffect, useState } from 'react';
 import { TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
@@ -13,38 +12,23 @@ import { languages, newsDomains } from '../utils';
 const SearchNewsScreen = () => {
   console.disableYellowBox = true;
   const [dateFrom, setDateFrom] = useState(new Date());
+  const [dateTo, setDateTo] = useState(new Date());
   const [query, setQuery] = useState('');
   const [language, setLanguage] = useState('');
   const [source, setSource] = useState('');
   const [loading, setLoading] = useState(true);
   const { clearNews, searchNews, state } = useContext(NewsContext);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [fromVisible, setFromVisible] = useState(false);
+  const [toVisible, setToVisible] = useState(false);
 
   useEffect(() => {
     clearNews();
   }, []);
 
-  const onChange = (event, selectedDate) => {
-    setDateFrom(selectedDate);
-  };
-
   const getNews = (query) => {
     searchNews(query);
     setLoading(false);
   };
-
-  const datePicker = (
-    <DateTimePicker
-      style={{
-        height: 300,
-        width: 300,
-        margin: 8,
-      }}
-      testID="dateTimePicker"
-      value={dateFrom}
-      onChange={onChange}
-    />
-  );
 
   return (
     <StyledView>
@@ -72,11 +56,6 @@ const SearchNewsScreen = () => {
           setLanguage(value);
         }}
       />
-      <Button
-        style={{ margin: 8 }}
-        title="Search"
-        onPress={() => getNews({ language, query, source })}
-      />
       <NewsList
         results={state.results}
         callback={searchNews}
@@ -84,13 +63,32 @@ const SearchNewsScreen = () => {
       />
       <Button
         style={{ margin: 8 }}
-        onPress={() => setModalVisible(!modalVisible)}
-        title="Time from"
+        onPress={() => setFromVisible(!fromVisible)}
+        title="Date from"
+      />
+      <Button
+        style={{ margin: 8 }}
+        onPress={() => setToVisible(!toVisible)}
+        title="Date to"
+      />
+      <Button
+        style={{ margin: 8 }}
+        title="Search"
+        onPress={() => getNews({ language, query, source })}
       />
       <Popup
-        content={datePicker}
-        setModalVisible={setModalVisible}
-        modalVisible={modalVisible}
+        header="Select date from"
+        date={dateFrom}
+        setDate={setDateFrom}
+        setModalVisible={setFromVisible}
+        modalVisible={fromVisible}
+      />
+      <Popup
+        header="Select date to"
+        date={dateTo}
+        setDate={setDateTo}
+        setModalVisible={setToVisible}
+        modalVisible={toVisible}
       />
     </StyledView>
   );
