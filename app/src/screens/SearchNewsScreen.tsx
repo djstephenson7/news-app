@@ -83,7 +83,7 @@ const SearchNewsScreen = () => {
       <Button
         style={{ margin: 8 }}
         title="Search"
-        onPress={() => getNews({ language, query, source })}
+        onPress={() => getNews({ language, query, source, dateFrom, dateTo })}
       />
       <Popup
         content={
