@@ -19,7 +19,7 @@
 ### Search News Screen
 
 - Search by headline DONE
-- Advanced search? (E.g. search by source, Author, country, language)
+- Advanced search? (E.g. search by source, Author, country, language) DONE
 
 ### Settings Screen
 

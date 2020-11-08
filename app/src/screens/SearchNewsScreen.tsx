@@ -1,40 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
 
 import DatePicker from '../components/DatePicker';
-import NewsList from '../components/NewsList';
 import Popup from '../components/Popup';
-import { Context as NewsContext } from '../context/newsContext';
+import { navigate } from '../navigation/navigationRef';
 import { StyledView } from '../styledElements';
 import { languages, newsDomains } from '../utils';
 
 const SearchNewsScreen = () => {
   console.disableYellowBox = true;
-  const [dateFrom, setDateFrom] = useState(new Date());
-  const [dateTo, setDateTo] = useState(new Date());
   const [dateBoundary, setDateBoundary] = useState('dateFrom');
+  const [dateFrom, setDateFrom] = useState(null);
+  const [dateTo, setDateTo] = useState(null);
   const [language, setLanguage] = useState('');
-  const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [query, setQuery] = useState('');
   const [source, setSource] = useState('');
-  const { clearNews, searchNews, state } = useContext(NewsContext);
-
-  useEffect(() => {
-    clearNews();
-  }, []);
 
   const onChange = (event, selectedDate) => {
     dateBoundary === 'dateFrom'
       ? setDateFrom(selectedDate)
       : setDateTo(selectedDate);
-  };
-
-  const getNews = (query) => {
-    searchNews(query);
-    setLoading(false);
   };
 
   return (
@@ -59,14 +47,10 @@ const SearchNewsScreen = () => {
         value={languages.label}
         onChangeText={(value) => setLanguage(value)}
       />
-      <NewsList
-        results={state.results}
-        callback={searchNews}
-        isRefreshing={loading}
-      />
       <Button
         style={{ margin: 8 }}
         onPress={() => {
+          setDateFrom(new Date());
           setDateBoundary('dateFrom');
           setModalVisible(!modalVisible);
         }}
@@ -75,6 +59,7 @@ const SearchNewsScreen = () => {
       <Button
         style={{ margin: 8 }}
         onPress={() => {
+          setDateTo(new Date());
           setDateBoundary('dateTo');
           setModalVisible(!modalVisible);
         }}
@@ -83,7 +68,9 @@ const SearchNewsScreen = () => {
       <Button
         style={{ margin: 8 }}
         title="Search"
-        onPress={() => getNews({ language, query, source, dateFrom, dateTo })}
+        onPress={() =>
+          navigate('MainScreen', { language, query, source, dateFrom, dateTo })
+        }
       />
       <Popup
         content={

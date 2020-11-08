@@ -4,12 +4,14 @@ import NewsList from '../components/NewsList';
 import { Context as NewsContext } from '../context/newsContext';
 import { StyledView } from '../styledElements';
 
-const MainScreen = () => {
+const MainScreen = ({ route }) => {
   const [loading, setLoading] = useState(true);
-  const { fetchNews, state } = useContext(NewsContext);
+  const { clearNews, fetchNews, searchNews, state } = useContext(NewsContext);
 
   useEffect(() => {
-    fetchNews() && setLoading(false);
+    clearNews();
+    route.params ? searchNews(route.params) : fetchNews();
+    setLoading(false);
   }, []);
 
   return (

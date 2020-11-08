@@ -45,12 +45,20 @@ const SearchStack = () => {
         component={SearchNewsScreen}
         options={{ title: 'Search' }}
       />
-      <Main.Screen
+      <Search.Screen
         name="NewsScreen"
         component={NewsScreen}
         options={({ route }) => ({
           title: route.params.source,
           headerBackTitle: null,
+        })}
+      />
+      <Search.Screen
+        name="MainScreen"
+        component={MainScreen}
+        options={({ route }) => ({
+          title: `Results for '${route.params.query}'`,
+          gestureEnabled: false,
         })}
       />
     </Search.Navigator>
