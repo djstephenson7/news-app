@@ -11,6 +11,11 @@ router.get('/', async (req, res) => {
   res.status(200).send(results);
 });
 
+router.get('/:id', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.status(200).send(user);
+});
+
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   const { username, email, password, firstName, surname } = req.body;
@@ -25,7 +30,7 @@ router.post('/', async (req, res) => {
 
   const token = user.generateAuthToken();
 
-  res.status(200).send(token);
+  res.status(200).send({ token, id: user._id });
 });
 
 module.exports = router;

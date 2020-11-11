@@ -76,9 +76,7 @@ const MainFlow = () => {
       <Main.Screen
         name="AuthFlow"
         component={AuthFlow}
-        options={{
-          headerShown: false,
-        }}
+        options={{ headerShown: false }}
       />
       <Main.Screen
         name="MainScreen"

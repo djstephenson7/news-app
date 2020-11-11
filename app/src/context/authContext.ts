@@ -19,10 +19,23 @@ const authReducer = (state, action) => {
   }
 };
 
+const getUserDetails = (dispatch) => async () => {
+  try {
+    const id = await AsyncStorage.getItem('userId');
+    const res = await newsAPI.get(`/users/${id}`);
+
+    return res.data;
+  } catch (error) {
+    console.log('ERROR: ', error);
+  }
+};
+
 const signup = (dispatch) => async (signupDetails) => {
   try {
     const res = await newsAPI.post('/users', signupDetails);
-    await AsyncStorage.setItem('token', res.data);
+
+    await AsyncStorage.setItem('token', res.data.token);
+    await AsyncStorage.setItem('userId', res.data.id);
     dispatch({ type: 'signin', payload: res.data });
 
     navigate('MainScreen');
@@ -66,6 +79,6 @@ const signout = (dispatch) => async () => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { autoSignin, clearErrors, signin, signup, signout },
+  { autoSignin, clearErrors, getUserDetails, signin, signup, signout },
   { token: null, errorMessage: '' }
 );

@@ -12,8 +12,7 @@ import { formatDate } from '../utils';
 
 const NewsScreen = ({ route }) => {
   const { state } = useContext(NewsContext);
-  const { key } = route.params;
-  const article = state.results.find((t) => t.key === key);
+  const article = state.results.find((t) => t.key === route.params.key);
 
   return (
     <StyledView>
