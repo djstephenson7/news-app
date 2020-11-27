@@ -30,6 +30,19 @@ const getUserDetails = (dispatch) => async () => {
   }
 };
 
+const updatePassword = (dispatch) => async (password) => {
+  try {
+    const id = await AsyncStorage.getItem('userId');
+    const res = await newsAPI.patch(`/users/${id}`, { password });
+    console.log(res.data);
+  } catch (error) {
+    console.log('ERROR: ', error);
+  }
+
+  //  Send a PATCH request to 'users/:id with updated password
+  //
+};
+
 const signup = (dispatch) => async (signupDetails) => {
   try {
     const res = await newsAPI.post('/users', signupDetails);
@@ -79,6 +92,14 @@ const signout = (dispatch) => async () => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { autoSignin, clearErrors, getUserDetails, signin, signup, signout },
+  {
+    autoSignin,
+    clearErrors,
+    getUserDetails,
+    signin,
+    signup,
+    signout,
+    updatePassword,
+  },
   { token: null, errorMessage: '' }
 );

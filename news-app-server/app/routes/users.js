@@ -33,4 +33,16 @@ router.post('/', async (req, res) => {
   res.status(200).send({ token, id: user._id });
 });
 
+router.patch('/:id', async (req, res) => {
+  const { password } = req.body;
+  password = await bcrypt.hash(password, 10);
+  await User.findByIdAndUpdate(req.params.id, { password }, (err, user) => {
+    if (err) {
+      console.log('ERROR: ', err);
+    } else {
+      console.log('Updated user: ', user);
+    }
+  });
+});
+
 module.exports = router;
