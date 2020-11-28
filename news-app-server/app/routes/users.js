@@ -13,6 +13,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const user = await User.findById(req.params.id);
+  console.log(user);
   res.status(200).send(user);
 });
 
@@ -34,8 +35,9 @@ router.post('/', async (req, res) => {
 });
 
 router.patch('/:id', async (req, res) => {
-  const { password } = req.body;
+  let { password } = req.body;
   password = await bcrypt.hash(password, 10);
+
   await User.findByIdAndUpdate(req.params.id, { password }, (err, user) => {
     if (err) {
       console.log('ERROR: ', err);

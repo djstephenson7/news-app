@@ -23,6 +23,6 @@
 
 ### Settings Screen
 
-- Update password
+- Update password DONE
 - Change language
 - Dark mode

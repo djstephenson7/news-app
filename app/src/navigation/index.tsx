@@ -37,6 +37,7 @@ const AuthFlow = () => {
     </Auth.Navigator>
   );
 };
+
 const SearchStack = () => {
   return (
     <Search.Navigator>

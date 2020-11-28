@@ -12,7 +12,7 @@ describe('/auth', () => {
     await User.collection.insertOne({
       username: 'User1',
       email: 'user1@test1.com',
-      password: 'Password1',
+      password: 'password',
       firstName: 'User1 firstName',
       surname: 'User1 surname',
     });
@@ -29,11 +29,10 @@ describe('/auth', () => {
     await mongoose.disconnect();
   });
 
-  const login = () =>
+  const login = async () =>
     request(server)
       .post('/api/auth')
-      .set('x-auth-token', token)
-      .send({ email: 'user1@test1.com', password: 'Password1' });
+      .send({ username: 'User1', password: 'password' });
 
   describe('POST', () => {
     it('Should log in a user successfully', async () => {
@@ -42,10 +41,20 @@ describe('/auth', () => {
       expect(res.status).toBe(200);
     });
 
-    xit('Should return 401 if no JWT present', async () => {
-      const res = await request(server).post('/api/auth').send(user);
+    it('Should return 400 if invalid username', async () => {
+      const res = await request(server)
+        .post('/api/auth')
+        .send({ username: 'Incorrect username', password: 'password' });
 
-      expect(res.status).toBe(401);
+      expect(res.status).toBe(400);
+    });
+
+    it('Should return 400 if invalid password', async () => {
+      const res = await request(server)
+        .post('/api/auth')
+        .send({ username: 'User1', password: 'Incorrect password' });
+
+      expect(res.status).toBe(400);
     });
   });
 });

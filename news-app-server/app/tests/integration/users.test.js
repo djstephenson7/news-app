@@ -24,18 +24,21 @@ describe('/users', () => {
         {
           username: 'User1',
           email: 'user1@test1.com',
+          password: 'password1',
           firstName: 'User1 firstName',
           surname: 'User1 surname',
         },
         {
           username: 'User2',
           email: 'user2@test2.com',
+          password: 'password2',
           firstName: 'User2 firstName',
           surname: 'User2 surname',
         },
         {
           username: 'User3',
           email: 'user3@test3.com',
+          password: 'password3',
           firstName: 'User3 firstName',
           surname: 'User3 surname',
         },
@@ -66,8 +69,8 @@ describe('/users', () => {
       const res = await request(server).post('/api/users').send(newUser);
 
       expect(res.status).toBe(200);
-      expect(res.body).toHaveProperty('_id');
-      expect(res.body).toHaveProperty('firstName', 'User1 firstName');
+      expect(res.body).toHaveProperty('id');
+      expect(res.body.token).toBeTruthy();
     });
 
     it('Should return invalid if email is fewer than 5 chars', async () => {

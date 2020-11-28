@@ -13,8 +13,8 @@ const userSchema = mongoose.Schema({
     maxLength: 50,
   },
   password: { type: String, required: true, minLength: 5, maxLength: 50 },
-  firstName: { type: String, required: true, minLength: 5, maxLength: 50 },
-  surname: { type: String, required: true, minLength: 5, maxLength: 50 },
+  firstName: { type: String, required: true, maxLength: 50 },
+  surname: { type: String, required: true, maxLength: 50 },
 });
 
 userSchema.methods.generateAuthToken = () => {
@@ -27,8 +27,8 @@ const validateUser = (user) => {
     username: Joi.string().min(5).max(50).required(),
     email: Joi.string().min(5).max(50).required().email(),
     password: Joi.string().min(5).max(50).required(),
-    firstName: Joi.string().min(5).max(50).required(),
-    surname: Joi.string().min(5).max(50).required(),
+    firstName: Joi.string().max(50).required(),
+    surname: Joi.string().max(50).required(),
   };
 
   return Joi.validate(user, schema);

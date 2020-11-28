@@ -50,11 +50,11 @@
     "@types/react-native": "~0.60.23",
     "babel-preset-expo": "~8.0.0",
     "import-sort-style-module": "^6.0.0",
+    "logkitty": ">=0.7.1",
+    "mem": ">=4.0.0",
     "prettier": "^2.0.5",
     "prettier-plugin-import-sort": "0.0.4",
-    "typescript": "~3.6.3",
-    "logkitty": ">=0.7.1",
-    "mem": ">=4.0.0"
+    "typescript": "~3.6.3"
   },
   "private": true,
   "name": "news-app-server",
