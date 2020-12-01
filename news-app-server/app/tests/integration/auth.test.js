@@ -29,30 +29,24 @@ describe('/auth', () => {
     await mongoose.disconnect();
   });
 
-  const login = async () =>
-    request(server)
-      .post('/api/auth')
-      .send({ username: 'User1', password: 'password' });
+  const login = async (username, password) =>
+    request(server).post('/api/auth').send({ username, password });
 
   describe('POST', () => {
     it('Should log in a user successfully', async () => {
-      const res = await login();
+      const res = await login('User1', 'password');
 
       expect(res.status).toBe(200);
     });
 
     it('Should return 400 if invalid username', async () => {
-      const res = await request(server)
-        .post('/api/auth')
-        .send({ username: 'Incorrect username', password: 'password' });
+      const res = await login('Incorrect username', 'password');
 
       expect(res.status).toBe(400);
     });
 
     it('Should return 400 if invalid password', async () => {
-      const res = await request(server)
-        .post('/api/auth')
-        .send({ username: 'User1', password: 'Incorrect password' });
+      const res = await login('User1', 'Incorrect password');
 
       expect(res.status).toBe(400);
     });
