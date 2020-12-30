@@ -111,4 +111,38 @@ describe('/users', () => {
       expect(res.status).toBe(400);
     });
   });
+
+  describe('PATCH/:id', () => {
+    let user;
+    let password;
+
+    beforeEach(async () => {
+      user = new User({
+        username: 'User1',
+        email: 'user1@test1.com',
+        password: 'Password',
+        firstName: 'User1 firstName',
+        surname: 'User1 surname',
+      });
+
+      await user.save();
+    });
+
+    const updatePassword = async () =>
+      await request(server).patch(`/api/users/${user._id}`).send({ password });
+
+    it('Updates the user password successfully', async () => {
+      password = 'Updated password';
+      const res = await updatePassword();
+
+      expect(res.status).toBe(200);
+    });
+
+    it('Returns 400 if new password is not valid', async () => {
+      password = '1';
+      const res = await updatePassword();
+
+      expect(res.status).toBe(400);
+    });
+  });
 });

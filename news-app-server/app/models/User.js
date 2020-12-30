@@ -34,7 +34,14 @@ const validateUser = (user) => {
   return Joi.validate(user, schema);
 };
 
+const validateUserPassword = (password) => {
+  const schema = { password: Joi.string().min(5).max(50).required() };
+
+  return Joi.validate(password, schema);
+};
+
 const User = mongoose.model('User', userSchema);
 
 exports.User = User;
 exports.validate = validateUser;
+exports.validatePassword = validateUserPassword;

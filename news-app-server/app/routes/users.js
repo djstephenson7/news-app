@@ -1,4 +1,4 @@
-const { User, validate } = require('../models/User');
+const { User, validate, validatePassword } = require('../models/User');
 const express = require('express');
 const router = express();
 const bcrypt = require('bcrypt');
@@ -19,13 +19,13 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   const { username, email, password, firstName, surname } = req.body;
-
   const usernameMatch = await User.findOne({ username });
+  const emailMatch = await User.findOne({ email });
+
   if (usernameMatch) {
     return res.status(409).send('This username already exists!');
   }
 
-  const emailMatch = await User.findOne({ email });
   if (emailMatch) {
     return res.status(409).send('This email is already registered!');
   }
@@ -47,13 +47,16 @@ router.post('/', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   let { password } = req.body;
+  const { error } = validatePassword({ password });
+
+  if (error) return res.status(400).send(error.details[0].message);
   password = await bcrypt.hash(password, 10);
 
   await User.findByIdAndUpdate(req.params.id, { password }, (err, user) => {
     if (err) {
       console.log('ERROR: ', err);
     } else {
-      console.log('Updated user: ', user);
+      res.status(200).send('Password updated successfully.');
     }
   });
 });

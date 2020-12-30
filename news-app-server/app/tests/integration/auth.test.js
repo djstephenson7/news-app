@@ -4,8 +4,6 @@ const { User } = require('../../models/User');
 
 describe('/auth', () => {
   let server;
-  let user;
-  let token;
 
   beforeEach(async () => {
     server = require('../../../index');
