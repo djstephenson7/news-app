@@ -34,26 +34,21 @@ const updatePassword = (dispatch) => async (password) => {
   try {
     const id = await AsyncStorage.getItem('userId');
     const res = await newsAPI.patch(`/users/${id}`, { password });
-    console.log(res.data);
   } catch (error) {
     console.log('ERROR: ', error);
   }
-
-  //  Send a PATCH request to 'users/:id with updated password
-  //
 };
 
 const signup = (dispatch) => async (signupDetails) => {
   try {
     const res = await newsAPI.post('/users', signupDetails);
-
     await AsyncStorage.setItem('token', res.data.token);
     await AsyncStorage.setItem('userId', res.data.id);
     dispatch({ type: 'signin', payload: res.data });
 
     navigate('MainScreen');
   } catch (error) {
-    dispatch({ type: 'error', payload: 'Something went wrong' });
+    dispatch({ type: 'error', payload: error.response.data });
   }
 };
 
@@ -80,7 +75,7 @@ const signin = (dispatch) => async ({ username, password }) => {
 
     navigate('MainScreen');
   } catch (error) {
-    dispatch({ type: 'error', payload: 'Something went wrong' });
+    dispatch({ type: 'error', payload: error.response.data });
   }
 };
 const signout = (dispatch) => async () => {
