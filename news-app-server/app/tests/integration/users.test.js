@@ -73,6 +73,23 @@ describe('/users', () => {
       expect(res.body.token).toBeTruthy();
     });
 
+    it('Should return 409 if the username already exists', async () => {
+      await User.collection.insertOne(newUser);
+      const res = await request(server).post('/api/users').send(newUser);
+
+      expect(res.status).toBe(409);
+      expect(res.text).toBe('This username already exists!');
+    });
+
+    it('Should return 409 if the username already exists', async () => {
+      await User.collection.insertOne(newUser);
+      newUser.username = 'User2';
+      const res = await request(server).post('/api/users').send(newUser);
+
+      expect(res.status).toBe(409);
+      expect(res.text).toBe('This email is already registered!');
+    });
+
     it('Should return invalid if email is fewer than 5 chars', async () => {
       newUser.email = '1234';
       const res = await request(server).post('/api/users').send(newUser);

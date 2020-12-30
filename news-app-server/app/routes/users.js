@@ -13,7 +13,6 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const user = await User.findById(req.params.id);
-  console.log(user);
   res.status(200).send(user);
 });
 
@@ -21,17 +20,29 @@ router.post('/', async (req, res) => {
   const { error } = validate(req.body);
   const { username, email, password, firstName, surname } = req.body;
 
-  if (error) return res.status(400).send(error.details[0].message);
+  const usernameMatch = await User.findOne({ username });
+  if (usernameMatch) {
+    return res.status(409).send('This username already exists!');
+  }
 
+  const emailMatch = await User.findOne({ email });
+  if (emailMatch) {
+    return res.status(409).send('This email is already registered!');
+  }
+
+  if (error) return res.status(400).send(error.details[0].message);
   let user = new User({ username, email, password, firstName, surname });
 
   user.password = await bcrypt.hash(user.password, 10);
 
-  await user.save();
+  try {
+    await user.save();
+    const token = user.generateAuthToken();
 
-  const token = user.generateAuthToken();
-
-  res.status(200).send({ token, id: user._id });
+    res.status(200).send({ token, id: user._id });
+  } catch (err) {
+    console.log('ERROR: ', err);
+  }
 });
 
 router.patch('/:id', async (req, res) => {
