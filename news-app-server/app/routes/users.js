@@ -18,20 +18,15 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
-  const { username, email, password, firstName, surname } = req.body;
-  const usernameMatch = await User.findOne({ username });
+  const { email, password, firstName, surname } = req.body;
   const emailMatch = await User.findOne({ email });
-
-  if (usernameMatch) {
-    return res.status(409).send('This username already exists!');
-  }
 
   if (emailMatch) {
     return res.status(409).send('This email is already registered!');
   }
 
   if (error) return res.status(400).send(error.details[0].message);
-  let user = new User({ username, email, password, firstName, surname });
+  let user = new User({ email, password, firstName, surname });
 
   user.password = await bcrypt.hash(user.password, 10);
 

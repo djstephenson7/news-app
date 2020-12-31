@@ -1,6 +1,5 @@
-import { Input, Text } from 'react-native-elements';
-
 import React from 'react';
+import { Input, Text } from 'react-native-elements';
 
 export interface AuthFormProps {
   headerText: string;
@@ -11,9 +10,9 @@ const AuthForm = (props) => {
   const {
     headerText,
     errorMessage,
-    username,
+    email,
+    setEmail,
     password,
-    setUsername,
     setPassword,
   } = props;
 
@@ -22,9 +21,9 @@ const AuthForm = (props) => {
       <Text>{headerText}</Text>
       <Text>{errorMessage && errorMessage}</Text>
       <Input
-        label="Username"
-        value={username}
-        onChangeText={setUsername}
+        label="Email"
+        value={email}
+        onChangeText={setEmail}
         autoCapitalize="none"
         autoCorrect={false}
       />

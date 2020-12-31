@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 const formSchema = yup.object().shape({
-  username: yup.string().min(5).max(50).required(),
   email: yup.string().email().min(5).max(50).required(),
   firstName: yup.string().min(5).max(50).required(),
   surname: yup.string().min(5).max(50).required(),

@@ -1,10 +1,11 @@
 const express = require('express');
 require('./app/db');
 const app = express();
-const port = 8000;
+const config = require('config');
 const users = require('./app/routes/users');
 const auth = require('./app/routes/auth');
 const news = require('./app/routes/news');
+const port = config.get('port');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

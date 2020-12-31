@@ -22,21 +22,18 @@ describe('/users', () => {
     it('Should return a list of all users', async () => {
       await User.collection.insertMany([
         {
-          username: 'User1',
           email: 'user1@test1.com',
           password: 'password1',
           firstName: 'User1 firstName',
           surname: 'User1 surname',
         },
         {
-          username: 'User2',
           email: 'user2@test2.com',
           password: 'password2',
           firstName: 'User2 firstName',
           surname: 'User2 surname',
         },
         {
-          username: 'User3',
           email: 'user3@test3.com',
           password: 'password3',
           firstName: 'User3 firstName',
@@ -46,7 +43,7 @@ describe('/users', () => {
       const res = await request(server).get('/api/users');
 
       expect(res.status).toBe(200);
-      expect(res.body[0].username).toBe('User1');
+      expect(res.body[0].firstName).toBe('User1 firstName');
       expect(res.body[1].email).toBe('user2@test2.com');
       expect(res.body[2].surname).toBe('User3 surname');
     });
@@ -57,7 +54,6 @@ describe('/users', () => {
 
     beforeEach(() => {
       newUser = {
-        username: 'User1',
         email: 'user1@test1.com',
         password: 'Password',
         firstName: 'User1 firstName',
@@ -73,17 +69,9 @@ describe('/users', () => {
       expect(res.body.token).toBeTruthy();
     });
 
-    it('Should return 409 if the username already exists', async () => {
+    it('Should return 409 if the email already exists', async () => {
       await User.collection.insertOne(newUser);
-      const res = await request(server).post('/api/users').send(newUser);
 
-      expect(res.status).toBe(409);
-      expect(res.text).toBe('This username already exists!');
-    });
-
-    it('Should return 409 if the username already exists', async () => {
-      await User.collection.insertOne(newUser);
-      newUser.username = 'User2';
       const res = await request(server).post('/api/users').send(newUser);
 
       expect(res.status).toBe(409);
@@ -103,13 +91,6 @@ describe('/users', () => {
 
       expect(res.status).toBe(400);
     });
-
-    it('Should return invalid if username is more than 50 chars', async () => {
-      newUser.username = 'a'.repeat(51);
-      const res = await request(server).post('/api/users').send(newUser);
-
-      expect(res.status).toBe(400);
-    });
   });
 
   describe('PATCH/:id', () => {
@@ -118,7 +99,6 @@ describe('/users', () => {
 
     beforeEach(async () => {
       user = new User({
-        username: 'User1',
         email: 'user1@test1.com',
         password: 'Password',
         firstName: 'User1 firstName',

@@ -1,15 +1,13 @@
-import * as yup from 'yup';
-
-import { Button, Input } from 'react-native-elements';
 import React, { useContext, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import { Button, Input } from 'react-native-elements';
+import * as yup from 'yup';
 
-import { Context as AuthContext } from '../context/authContext';
 import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
+import { Context as AuthContext } from '../context/authContext';
 
 type FormData = {
-  username: string;
   email: string;
   firstName: string;
   surname: string;
@@ -18,7 +16,6 @@ type FormData = {
 };
 
 const formSchema = yup.object().shape({
-  username: yup.string().min(5).max(50).required(),
   email: yup.string().email().min(5).max(50).required(),
   firstName: yup.string().min(5).max(50).required(),
   surname: yup.string().min(5).max(50).required(),
@@ -29,7 +26,6 @@ const formSchema = yup.object().shape({
 const SignupScreen = () => {
   const { state, signup } = useContext(AuthContext);
 
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setfirstName] = useState('');
@@ -38,20 +34,14 @@ const SignupScreen = () => {
   return (
     <ScrollView>
       <AuthForm
-        username={username}
-        setUsername={setUsername}
+        email={email}
+        setEmail={setEmail}
         password={password}
         setPassword={setPassword}
         headerText="Signup screen"
         errorMessage={state.errorMessage}
       />
-      <Input
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        autoCorrect={false}
-      />
+
       <Input
         label="First Name"
         value={firstName}
@@ -70,9 +60,7 @@ const SignupScreen = () => {
       <NavLink text="To Login Screen" routeName="Login" />
       <Button
         title="Signup"
-        onPress={() =>
-          signup({ username, email, firstName, surname, password })
-        }
+        onPress={() => signup({ email, password, firstName, surname })}
       ></Button>
     </ScrollView>
   );

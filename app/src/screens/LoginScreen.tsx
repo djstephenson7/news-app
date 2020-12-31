@@ -8,7 +8,7 @@ import { Context as AuthContext } from '../context/authContext';
 
 const LoginScreen = () => {
   const { state, signin, clearErrors } = useContext(AuthContext);
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useFocusEffect(
@@ -22,8 +22,8 @@ const LoginScreen = () => {
   return (
     <View>
       <AuthForm
-        username={username}
-        setUsername={setUsername}
+        email={email}
+        setEmail={setEmail}
         password={password}
         setPassword={setPassword}
         headerText="Login screen"
@@ -33,7 +33,7 @@ const LoginScreen = () => {
       <NavLink text="Forgot your password?" routeName="ForgotPassword" />
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={() => signin({ username, password })}
+        onPress={() => signin({ email, password })}
       >
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>

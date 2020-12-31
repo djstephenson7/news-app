@@ -67,9 +67,9 @@ const clearErrors = (dispatch) => () => {
   dispatch({ type: 'clear_errors' });
 };
 
-const signin = (dispatch) => async ({ username, password }) => {
+const signin = (dispatch) => async ({ email, password }) => {
   try {
-    const res = await newsAPI.post('/auth', { username, password });
+    const res = await newsAPI.post('/auth', { email, password });
     await AsyncStorage.setItem('token', res.data);
     dispatch({ type: 'signin', payload: res.data });
 

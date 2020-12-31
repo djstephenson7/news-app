@@ -1,4 +1,5 @@
 {
   "db": "news-api-test",
-  "jwtPrivateKey": "jwtPrivateKey"
+  "jwtPrivateKey": "jwtPrivateKey",
+  "port": 8001
 }

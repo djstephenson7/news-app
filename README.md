@@ -26,3 +26,7 @@
 - Update password DONE
 - Change language
 - Dark mode
+
+### Login/Signup Screen
+
+- Implement UI features in: https://uxdesign.cc/22-rules-for-user-sign-up-sign-in-journeys-e0e863cba40a
