@@ -37,9 +37,9 @@ describe('/auth', () => {
     });
 
     it('Should return 400 if invalid password', async () => {
-      const res = await login('User1', 'Incorrect password');
+      const res = await login('user1@test1.com', 'Incorrect password');
 
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(401);
     });
   });
 });

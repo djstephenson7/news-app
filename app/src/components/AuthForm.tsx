@@ -1,6 +1,8 @@
 import React from 'react';
 import { Input, Text } from 'react-native-elements';
 
+import FieldHeader from './FieldHeader';
+
 export interface AuthFormProps {
   headerText: string;
   errorMessage: string;
@@ -14,6 +16,7 @@ const AuthForm = (props) => {
     setEmail,
     password,
     setPassword,
+    required,
   } = props;
 
   return (
@@ -21,14 +24,14 @@ const AuthForm = (props) => {
       <Text>{headerText}</Text>
       <Text>{errorMessage && errorMessage}</Text>
       <Input
-        label="Email"
+        label={<FieldHeader text="Email" required={required} />}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
         autoCorrect={false}
       />
       <Input
-        label="Password"
+        label={<FieldHeader text="Password" required={required} />}
         value={password}
         onChangeText={setPassword}
         autoCapitalize="none"

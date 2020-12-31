@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { Button, Input } from 'react-native-elements';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { Button, Input, Text } from 'react-native-elements';
 import * as yup from 'yup';
 
 import AuthForm from '../components/AuthForm';
+import FieldHeader from '../components/FieldHeader';
 import NavLink from '../components/NavLink';
 import { Context as AuthContext } from '../context/authContext';
 
@@ -26,34 +27,47 @@ const formSchema = yup.object().shape({
 const SignupScreen = () => {
   const { state, signup } = useContext(AuthContext);
 
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [firstName, setfirstName] = useState('');
   const [surname, setSurname] = useState('');
 
   return (
     <ScrollView>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          padding: 8,
+        }}
+      >
+        <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
+          Tell us about yourself!
+        </Text>
+        <Text>
+          <Text style={{ color: 'red' }}>*</Text> Required fields
+        </Text>
+      </View>
       <AuthForm
+        required
         email={email}
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
-        headerText="Signup screen"
         errorMessage={state.errorMessage}
       />
 
       <Input
-        label="First Name"
+        label={<FieldHeader text="First name" required />}
         value={firstName}
         onChangeText={setfirstName}
-        autoCapitalize="none"
         autoCorrect={false}
       />
       <Input
-        label="Surname"
+        label={<FieldHeader text="Surname" required />}
         value={surname}
         onChangeText={setSurname}
-        autoCapitalize="none"
         autoCorrect={false}
       />
 
