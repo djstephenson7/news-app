@@ -42,6 +42,7 @@ const updatePassword = (dispatch) => async (password) => {
 const signup = (dispatch) => async (signupDetails) => {
   try {
     const res = await newsAPI.post('/users', signupDetails);
+
     await AsyncStorage.setItem('token', res.data.token);
     await AsyncStorage.setItem('userId', res.data.id);
     dispatch({ type: 'signin', payload: res.data });

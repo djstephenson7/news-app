@@ -1,15 +1,16 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useContext, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Field, Formik } from 'formik';
+import React, { useCallback, useContext } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
 
-import AuthForm from '../components/AuthForm';
+import CustomInput from '../components/CustomInput';
 import NavLink from '../components/NavLink';
 import { Context as AuthContext } from '../context/authContext';
+import formSchema from '../schema/FormSchema';
 
 const LoginScreen = () => {
   const { state, signin, clearErrors } = useContext(AuthContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   useFocusEffect(
     useCallback(() => {
@@ -21,22 +22,33 @@ const LoginScreen = () => {
 
   return (
     <View>
-      <AuthForm
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        headerText="Login screen"
-        errorMessage={state.errorMessage}
-      />
+      <Text>{state.errorMessage && state.errorMessage}</Text>
+      <Formik
+        validationSchema={formSchema}
+        initialValues={{ email: '', password: '' }}
+        onSubmit={signin}
+      >
+        {({ handleSubmit }) => (
+          <>
+            <Field
+              component={CustomInput}
+              name="email"
+              placeholder="Email Address"
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+            <Field
+              component={CustomInput}
+              name="password"
+              placeholder="Password"
+              secureTextEntry
+            />
+            <Button onPress={handleSubmit} title="Submit" />
+          </>
+        )}
+      </Formik>
       <NavLink text="To Signup Screen" routeName="Signup" />
       <NavLink text="Forgot your password?" routeName="ForgotPassword" />
-      <TouchableOpacity
-        style={styles.loginBtn}
-        onPress={() => signin({ email, password })}
-      >
-        <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
     </View>
   );
 };
