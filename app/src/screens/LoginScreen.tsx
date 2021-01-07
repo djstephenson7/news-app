@@ -7,7 +7,7 @@ import { Button } from 'react-native-elements';
 import CustomInput from '../components/CustomInput';
 import NavLink from '../components/NavLink';
 import { Context as AuthContext } from '../context/authContext';
-import formSchema from '../schema/FormSchema';
+import { loginSchema } from '../schema/formSchema';
 
 const LoginScreen = () => {
   const { state, signin, clearErrors } = useContext(AuthContext);
@@ -24,7 +24,7 @@ const LoginScreen = () => {
     <View>
       <Text>{state.errorMessage && state.errorMessage}</Text>
       <Formik
-        validationSchema={formSchema}
+        validationSchema={loginSchema}
         initialValues={{ email: '', password: '' }}
         onSubmit={signin}
       >
