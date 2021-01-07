@@ -37,6 +37,7 @@ const SignupScreen = () => {
         {({ handleSubmit }) => (
           <>
             <Field
+              validationConfirmation="Email looks great!"
               component={CustomInput}
               name="email"
               placeholder="Email Address"
@@ -44,17 +45,20 @@ const SignupScreen = () => {
               autoCapitalize="none"
             />
             <Field
+              validationConfirmation="Password is OK."
               component={CustomInput}
               name="password"
               placeholder="Password"
               secureTextEntry
             />
             <Field
+              validationConfirmation="Great name!"
               component={CustomInput}
               name="firstName"
               placeholder="First Name"
             />
             <Field
+              validationConfirmation="Better surname!"
               component={CustomInput}
               name="surname"
               placeholder="Surname"

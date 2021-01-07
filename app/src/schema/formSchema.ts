@@ -23,17 +23,3 @@ export const signupSchema = yup.object().shape({
     .max(50, 'This field cannot be more than 50 characters')
     .required('Surname is required'),
 });
-
-export const loginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email('Must be a valid email')
-    .min(5, 'This field cannot be less than 5 characters')
-    .max(50, 'This field cannot be more than 50 characters')
-    .required('Email is required'),
-  password: yup
-    .string()
-    .min(5, 'This field cannot be less than 5 characters')
-    .max(50, 'This field cannot be more than 50 characters')
-    .required('Password is required'),
-});
