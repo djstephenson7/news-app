@@ -1,6 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
+import * as LocalAuthentication from 'expo-local-authentication';
 import { Field, Formik } from 'formik';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
@@ -19,8 +20,23 @@ const LoginScreen = () => {
     }, [])
   );
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const compatible = await LocalAuthentication.hasHardwareAsync();
+      console.log(compatible);
+    };
+    fetchData();
+  }, []);
+
+  const submitDetails = async () => {
+    // const hasBio = await LocalAuthentication.isEnrolledAsync();
+    let result = await LocalAuthentication.authenticateAsync()
+    console.log(result);
+    
+  };
+
   return (
-    <View>
+    <View style={styles.container}>
       <Text>{state.errorMessage && state.errorMessage}</Text>
       <Formik initialValues={{ email: '', password: '' }} onSubmit={signin}>
         {({ handleSubmit }) => (
@@ -38,7 +54,11 @@ const LoginScreen = () => {
               placeholder="Password"
               secureTextEntry
             />
-            <Button onPress={handleSubmit} title="Submit" />
+            <Button
+              style={styles.loginBtn}
+              onPress={submitDetails}
+              title="Sign in"
+            />
           </>
         )}
       </Formik>
@@ -49,37 +69,8 @@ const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  header: {
-    marginBottom: '30%',
-    fontSize: 30,
-  },
-  inputText: {
-    width: '80%',
-    backgroundColor: '#D3D3D3',
-    borderRadius: 25,
-    height: 50,
-    marginBottom: 20,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  forgot: {
-    padding: '2.5%',
-
-    fontSize: 16,
-  },
-  loginBtn: {
-    width: '80%',
-    backgroundColor: '#556B2F',
-    borderRadius: 25,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 40,
-    marginBottom: 10,
-  },
-  loginText: {
-    color: 'black',
-  },
+  container: { padding: 8 },
+  loginBtn: { padding: 40 },
 });
 
 export default LoginScreen;
