@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import newsAPI from '../api/newsAPI';
 import { navigate } from '../navigation/navigationRef';
@@ -83,7 +83,7 @@ const signout = (dispatch) => async () => {
   await AsyncStorage.removeItem('token');
   dispatch({ type: 'signout' });
 
-  navigate('Login');
+  navigate('AuthFlow');
 };
 
 export const { Provider, Context } = createDataContext(

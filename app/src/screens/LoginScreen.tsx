@@ -28,12 +28,12 @@ const LoginScreen = () => {
     fetchData();
   }, []);
 
-  const submitDetails = async () => {
-    // const hasBio = await LocalAuthentication.isEnrolledAsync();
-    let result = await LocalAuthentication.authenticateAsync()
-    console.log(result);
-    
-  };
+  // const submitDetails = async () => {
+  //   // const hasBio = await LocalAuthentication.isEnrolledAsync();
+  //   let result = await LocalAuthentication.authenticateAsync()
+  //   console.log(result);
+
+  // };
 
   return (
     <View style={styles.container}>
