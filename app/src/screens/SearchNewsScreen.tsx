@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-material-dropdown-v2';
 
 import DatePicker from '../components/DatePicker';
 import Popup from '../components/Popup';

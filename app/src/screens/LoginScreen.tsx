@@ -56,7 +56,7 @@ const LoginScreen = () => {
             />
             <Button
               style={styles.loginBtn}
-              onPress={submitDetails}
+              onPress={handleSubmit}
               title="Sign in"
             />
           </>
